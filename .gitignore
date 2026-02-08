@@ -1,0 +1,8 @@
+*
+
+!.gitignore
+
+!eww/
+!eww/*
+!eww/scripts/
+!eww/scripts/*
