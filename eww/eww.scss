@@ -13,10 +13,14 @@ $main_accent_color: $accent_light_color;
     $main_text_color: $main_light_color;
     $main_accent_color: $accent_dark_color;
 }
+* {
+    background-color: rgba(255, 255, 255, 0);
+}
 
 box {
     color: $main_text_color;
     background-color: $main_background_color;
+    font-family: Ubuntu, sans-serif;
 }
 
 .tray {
@@ -26,13 +30,15 @@ box {
     background-color: lightblue;
 }
 
-.progress_bar {
-    /* background-color: rgba(4, 170, 109, 0.3); */
-    /* color: red; */
+.bar_itself {
+    /* background-color: red; */
+    /* border: 1px solid white; */
+    border-radius: 5px;
 }
 
 .bar_contents {
     background-color: rgba(255, 255, 255, 0);
+    border-radius: 5px;
 }
 
 .clock {
@@ -40,26 +46,29 @@ box {
 }
 
 .debug_border {
-    border: 3px solid $main_text_color;
+    border: 3px solid lightblue;
+    margin: -3px;
 }
 
 /* tiny extra bit of progressbar */
 progressbar {
     background-color: $main_accent_color;
+    /* border: 1px solid white; */
+    border-radius: 5px;
 }
 
 /* background color of bar */
 progressbar > trough {
-    min-width: 60px;
+    min-width: 20px;
     background-color: $main_accent_color;
     border: 0px;
-    /* rgba(4, 170, 109, 0.3); */
+    border-radius: 5px;
 }
 
 /* color of the actual progress */
 progress {
     background-color: $main_text_color;
     border: 0px;
-    /* rgba(170, 4, 109, 0.3); */
-    min-width: 40px;
+    min-width: 20px;
+    border-radius: 5px;
 }

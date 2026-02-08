@@ -15,62 +15,67 @@
 (defpoll current_second :interval "1s" "date '+%S'")
 
 (defwidget clock []
-
   (box
-       :orientation "v"
-       :class "clock debug_border"
-       :valign "end"
-       :halign "center"
+      :orientation "v"
+      :class "clock debug_border"
+      :valign "end"
+      :halign "start"
        (box current_hour)
        (box current_minute)
-       (box current_second)))
-
+       (box current_second)
+  )
+)
 
 ;; @@@@@@@@@@@
 ;; Battery
 ;; @@@@@@@@@@
-(defpoll current_battery :interval "1m" "eww get EWW_BATTERY | jq '.BAT1.capacity'")
+(defpoll current_battery :interval "1s" "eww get EWW_BATTERY | jq '.BAT1.capacity'") ; | sed 's/$/\%/'")
+(defpoll current_battery_status :interval "1m" "eww get EWW_BATTERY | jq '.BAT1.status'")
+
+(defwidget battery []
+    (box
+        :orientation "v"
+        :class "battery debug_border"
+        :halign "start"
+        current_battery
+    )
+)
+
+;; @@@@@@@@@@@
+;; Sys tray
+;; @@@@@@@@@@
+(defwidget my_systray []
+    (systray
+      :class "tray debug_border"
+      :orientation "v"
+      :halign "start"
+    )
+)
+
 
 (defwindow progress
         :monitor 0
-        :geometry (geometry :x "20px"
-                            :y "0px"
-                            :width "20px"
-                            :height "99%"
-                            :anchor "center left")
+        :geometry (geometry
+                    :x "2px"
+                    :y "0px"
+                    :width "20px"
+                    :height "99%"
+                    :anchor "center left")
         :stacking "fg"
         :exclusive true
-
 (overlay
-  (progress :value current_battery
-               :orientation "v"
-               :flipped true
-               :class "progress_bar"
-               )
+  :class "bar_itself"
+  (progress
+      :value current_battery
+      :orientation "v"
+      :flipped true
+  )
   (box
     :orientation "v"
     :class "bar_contents"
-    (box
-      :class "debug_border"
-      :valign "start"
-      (label
-        :text current_battery))
-  (clock)
-  (systray
-      :class "tray debug_border")
-  )
-
-))
-
-(defwindow bar
-           :monitor 0
-           :geometry (geometry :x "2px"
-                               :y "0px"
-                               :width "20px"
-                               :height "90%"
-                               :anchor "center left")
-           :stacking "fg"
-           :exclusive true
-(box
-
-  (clock)))
+    :space-evenly false
+    :valign "end"
+    (clock)
+    (my_systray)
+    (battery)
+  )))
