@@ -23,6 +23,10 @@ box {
     font-family: Ubuntu, sans-serif;
 }
 
+.centerbox {
+    background-color: rgba(125, 125, 125, 0);
+}
+
 .tray {
     background-color: rgba(255, 255, 255, 0);
 }
@@ -41,13 +45,21 @@ box {
     border-radius: 5px;
 }
 
+.battery {
+    color: $main_light_color;
+    background-color: rgba(255, 255, 255, 0);
+}
+
 .clock {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: $main_background_color;
+    color: $main_text_color;
+    border-radius: 5px;
+    /* background-color: red; */
 }
 
 .debug_border {
-    border: 3px solid lightblue;
-    margin: -3px;
+    /* border: 3px solid lightblue; */
+    /* margin: -3px; */
 }
 
 /* tiny extra bit of progressbar */
@@ -59,7 +71,7 @@ progressbar {
 
 /* background color of bar */
 progressbar > trough {
-    min-width: 20px;
+    min-width: 45px;
     background-color: $main_accent_color;
     border: 0px;
     border-radius: 5px;
@@ -69,6 +81,6 @@ progressbar > trough {
 progress {
     background-color: $main_text_color;
     border: 0px;
-    min-width: 20px;
+    min-width: 45px;
     border-radius: 5px;
 }

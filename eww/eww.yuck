@@ -14,30 +14,32 @@
 (defpoll current_minute :interval "1s" "date '+%M'")
 (defpoll current_second :interval "1s" "date '+%S'")
 
-(defwidget clock []
+(defwidget clock [valignment]
   (box
       :orientation "v"
       :class "clock debug_border"
-      :valign "end"
-      :halign "start"
-       (box current_hour)
-       (box current_minute)
-       (box current_second)
+      :valign valignment
+      ; :halign "center"
+       current_hour
+       current_minute
+       current_second
   )
 )
 
 ;; @@@@@@@@@@@
 ;; Battery
 ;; @@@@@@@@@@
-(defpoll current_battery :interval "1s" "eww get EWW_BATTERY | jq '.BAT1.capacity'") ; | sed 's/$/\%/'")
+(defpoll current_battery :interval "1m" "eww get EWW_BATTERY | jq '.BAT1.capacity'") ; | sed 's/$/\%/'")
 (defpoll current_battery_status :interval "1m" "eww get EWW_BATTERY | jq '.BAT1.status'")
+(defpoll current_battery_status_icon :interval "1s" "./scripts/check_battery_status.sh")
 
 (defwidget battery []
     (box
         :orientation "v"
         :class "battery debug_border"
-        :halign "start"
+        :halign "center"
         current_battery
+        current_battery_status_icon
     )
 )
 
@@ -48,9 +50,10 @@
     (systray
       :class "tray debug_border"
       :orientation "v"
-      :halign "start"
+      :halign "center"
     )
 )
+
 
 
 (defwindow progress
@@ -70,12 +73,17 @@
       :orientation "v"
       :flipped true
   )
-  (box
-    :orientation "v"
-    :class "bar_contents"
-    :space-evenly false
-    :valign "end"
-    (clock)
-    (my_systray)
-    (battery)
+  (centerbox
+      :orientation "v"
+      :class "centerbox"
+      (clock :valignment "start")
+      (clock :valignment "center")
+      (box
+        :orientation "v"
+        :class "bar_contents"
+        :space-evenly false
+        :valign "end"
+        (my_systray)
+        (battery)
+      )
   )))
