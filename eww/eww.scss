@@ -1,0 +1,65 @@
+$is_lightmode: true;
+
+$main_dark_color: #2c2626;
+$main_light_color: #fbf1c6;
+$accent_dark_color: #003720;
+$accent_light_color: #33df77;
+
+$main_background_color: $main_light_color;
+$main_text_color: $main_dark_color;
+$main_accent_color: $accent_light_color;
+@if $is_lightmode == false {
+    $main_background_color: $main_dark_color;
+    $main_text_color: $main_light_color;
+    $main_accent_color: $accent_dark_color;
+}
+
+box {
+    color: $main_text_color;
+    background-color: $main_background_color;
+}
+
+.tray {
+    background-color: rgba(255, 255, 255, 0);
+}
+.tray menu {
+    background-color: lightblue;
+}
+
+.progress_bar {
+    /* background-color: rgba(4, 170, 109, 0.3); */
+    /* color: red; */
+}
+
+.bar_contents {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.clock {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.debug_border {
+    border: 3px solid $main_text_color;
+}
+
+/* tiny extra bit of progressbar */
+progressbar {
+    background-color: $main_accent_color;
+}
+
+/* background color of bar */
+progressbar > trough {
+    min-width: 60px;
+    background-color: $main_accent_color;
+    border: 0px;
+    /* rgba(4, 170, 109, 0.3); */
+}
+
+/* color of the actual progress */
+progress {
+    background-color: $main_text_color;
+    border: 0px;
+    /* rgba(170, 4, 109, 0.3); */
+    min-width: 40px;
+}
