@@ -2,6 +2,7 @@
 ; todos
 ;; @@@@@@@@@@
 ; place elements at milestone heights so battery % can be checked with bar
+; color change when battery under a certain amount
 
 ;; @@@@@@@@@@@@@@@@@@
 ;; Sizing vars
@@ -59,12 +60,77 @@
     )
 )
 
+;; @@@@@@@@@@@@@@@@@@@
+;; @@@@@@@@@@@
+;; Currently Reading
+;; @@@@@@@@@@@
+(defpoll currently_reading_data :interval "1s" "cat /home/sand/.config/eww/data/currently_reading.json | jq .books")
+(defvar book_icon "")
+
+(defwidget book_progress [title progress]
+  (box
+      :class "shelf"
+
+  (overlay
+    :orientation "h"
+    :space-evenly false
+
+    (box
+      :class "book_progress_icons debug_border"
+      :space-evenly false
+      :halign "start"
+      (label :class "book_progress_icon ${progress >= 10 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 20 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 30 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 40 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 50 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 60 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 70 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 80 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 90 ? "" : "empty"}" :text book_icon)
+      (label :class "book_progress_icon ${progress >= 100 ? "" : "empty"}" :text book_icon)
+      ; (label
+      ;     :class "book_title title_length_adjuster"
+      ;     :halign "start"
+      ;     :valign "end"
+      ;     :text title
+      ; )
+    )
+
+    (label
+      :class "book_title debug_border"
+      :halign "start"
+      :valign "end"
+      :xalign 0
+      :yalign 0
+      ; :truncate true
+      :wrap true
+      :wrap-mode "word"
+      :text title)
+
+  )))
+
+(defwidget currently_reading [reading_data]
+  (box
+    :orientation "v"
+    :class "bookshelf"
+    :space-evenly false
+    (for book in reading_data
+      (book_progress
+          :title "${book.title}"
+          :progress "${book.progress}"
+      )
+    )
+   )
+)
 
 
-(defwindow progress
+
+
+(defwindow my_vertical_bar
         :monitor 0
         :geometry (geometry
-                    :x "2px"
+                    :x "0px"
                     :y "0px"
                     :width "20px"
                     :height "99%"
@@ -92,3 +158,16 @@
         (battery)
       )
   )))
+
+(defwindow my_book_progress
+        :monitor 0
+        :geometry (geometry
+                    :x "1%"
+                    :y "2%"
+                    ; :width "20%"
+                    ; :height "20%"
+                    :anchor "left bottom")
+        :stacking "fg"
+        :exclusive false
+    (currently_reading :reading_data currently_reading_data)
+)
