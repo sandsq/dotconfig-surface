@@ -64,7 +64,7 @@
 ;; @@@@@@@@@@@
 ;; Currently Reading
 ;; @@@@@@@@@@@
-(defpoll currently_reading_data :interval "1s" "cat /home/sand/.config/eww/data/currently_reading.json | jq .books")
+(defpoll currently_reading_data :interval "10m" "cat /home/sand/.config/eww/data/currently_reading.json | jq .books")
 (defvar book_icon "")
 
 (defwidget book_progress [title progress]
