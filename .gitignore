@@ -8,3 +8,8 @@
 !eww/scripts/*
 !eww/data/
 !eww/data/*
+
+!hypr
+!hypr/*
+
+hypr/hyprland.conf

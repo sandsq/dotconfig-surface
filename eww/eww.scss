@@ -12,7 +12,7 @@ $main_background_color: $main_light_color;
 $main_text_color: $main_dark_color;
 $main_accent_color: $accent_light_color;
 $secondary_accent_color: $accent_dark_color;
-$text_stroke_width: 2px;
+$text_stroke_width: 0.125rem;
 @if $is_lightmode == false {
     $main_background_color: $main_dark_color;
     $main_text_color: $main_light_color;
@@ -24,7 +24,6 @@ $text_stroke_width: 2px;
 // Global Styles
 // @@@@@@@@@@@@@@@@@@
 * {
-    /* background-color: rgba(255, 255, 255, 0); */
     all: unset;
     font-family: "DepartureMono Nerd Font Mono", "Ubuntu Sans Mono";
 }
@@ -34,26 +33,21 @@ box {
     background-color: $main_background_color;
 }
 
-/* tiny extra bit of progressbar */
 progressbar {
     background-color: $border_accent_golder_color;
-    border-radius: 5px;
 }
 
-/* background color of bar */
 progressbar > trough {
-    min-width: 45px;
+    min-width: 2.5rem;
     background-color: $border_accent_golder_color;
-    border: 0px;
-    border-radius: 5px;
+    border: 0;
 }
 
-/* color of the actual progress */
 progress {
     background-color: $secondary_accent_color;
-    border: 0px;
-    min-width: 25px;
-    border-radius: 5px;
+    border: 0;
+    min-width: 2.5rem;
+    border-radius: 0;
 }
 
 // @@@@@@@@@@@@@@@@@@
@@ -61,112 +55,161 @@ progress {
 // @@@@@@@@@@@@@@@@@@
 $clock_text_stroke_color: $border_accent_golder_color;
 .clock {
-    /* background-color: $main_background_color; */
     background-color: rgba(0, 0, 0, 0);
     color: $main_text_color;
-    border-radius: 10px;
-    padding-bottom: 3px;
+    border-radius: 0.625rem;
+    padding-bottom: 0.1875rem;
     text-shadow:
-        1px 1px 0 $clock_text_stroke_color,
-        1px -1px 0 $clock_text_stroke_color,
-        -1px 1px 0 $clock_text_stroke_color,
-        -1px -1px 0 $clock_text_stroke_color,
-        1px 0px 0 $clock_text_stroke_color,
-        0px 1px 0 $clock_text_stroke_color,
-        -1px 0px 0 $clock_text_stroke_color,
-        0px -1px 0 $clock_text_stroke_color;
+        0.0625rem 0.0625rem 0 $clock_text_stroke_color,
+        0.0625rem -0.0625rem 0 $clock_text_stroke_color,
+        -0.0625rem 0.0625rem 0 $clock_text_stroke_color,
+        -0.0625rem -0.0625rem 0 $clock_text_stroke_color,
+        0.0625rem 0 0 $clock_text_stroke_color,
+        0 0.0625rem 0 $clock_text_stroke_color,
+        -0.0625rem 0 0 $clock_text_stroke_color,
+        0 -0.0625rem 0 $clock_text_stroke_color;
 }
 
 .hour {
-    font-size: 16px; // Largest font size for the hour
+    font-size: 16px; // Preserve font size
     font-weight: bold;
 }
 
 .minute {
-    font-size: 14px; // Medium font size for the minute
+    font-size: 14px; // Preserve font size
     font-weight: bold;
-    margin: -6px 0px 0px 0px;
+    margin: -0.375rem 0 0 0;
 }
 
 .second {
-    font-size: 12px; // Smaller font size for the seconds
+    font-size: 12px; // Preserve font size
     font-weight: bold;
-    margin: -4px 0 0 0;
+    margin: -0.25rem 0 0 0;
 }
+
 .clock_icon {
-    margin-left: 6px;
-    margin-bottom: 0px;
+    margin-left: 0.1875rem;
+    margin-bottom: 0;
 }
 
 .calendar_box {
     background-color: $secondary_accent_color;
-    padding: 20px 10px 0 10px;
+    padding: 1.25rem 0.625rem 0 0.625rem;
     opacity: 0.9;
-    border: 8px solid $border_accent_color;
-    border-radius: 8px;
+    border: 0.5rem solid $border_accent_color;
+    border-radius: 0.5rem;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 18px; // Preserve font size
 }
+
 .calendar_inner {
     background-color: $secondary_accent_color;
-    padding: 10px;
-    border: 4px solid red;
+    padding: 0.625rem;
+    border: 0.25rem solid red;
 }
+
 .calendar_itself {
     background-color: $secondary_accent_color;
     color: $border_accent_color;
-    padding: 10px 10px 10px 10px;
+    padding: 0.625rem;
 }
+
 calendar:selected {
     color: lightblue;
     font-weight: bold;
 }
+
 calendar.header {
-    /* border-top: 4px solid black; */
-    border-bottom: 4px solid $border_accent_color;
-    margin: 5px 0 0 5px;
+    border-bottom: 0.25rem solid $border_accent_color;
+    margin: 0.3125rem 0 0 0.3125rem;
 }
+
 calendar.highlight {
     color: lightcoral;
 }
+
 calendar.button {
     color: green;
 }
+
 calendar:indeterminate {
     color: rgba($border_accent_color, 0.5);
 }
+
 calendar:hover {
     background-color: darkblue;
 }
+
 // @@@@@@@@@@@@@@@@@@
 // battery
 // @@@@@@@@@@@@@@@@@@
 .battery {
     background-color: rgba(255, 255, 255, 0);
 }
+
 .battery_icon {
     color: $border_accent_golder_color;
     background-color: rgba(255, 255, 255, 0);
-    font-size: 24px;
+    font-size: 24px; // Preserve font size
 }
 
 .battery_tooltip {
-    background-color: $main_background_color;
-    border-radius: 5px;
-    border: 2px solid $main_text_color;
-    padding: 5px;
-    /* min-width: 50px; */
+    background-color: $border_accent_golder_color;
+    color: $main_text_color;
+    border-radius: 0.3125rem;
+    border: 0.25rem solid $secondary_accent_color;
+    padding: 0.3125rem;
+    min-width: 20rem;
+    font-weight: bold;
+    font-size: 18px; // Preserve font size
 }
+
+// @@@@@@@@@@@@@
+// resource monitor
+// @@@@@@@@@@@@@
+.simple_monitor_class {
+    background-color: $accent_dark_color3;
+    font-size: 12px; // Preserve font size
+    font-weight: bold;
+    color: $border_accent_golder_color;
+    border: 0.0625rem solid $border_accent_golder_color;
+    margin: 0 0.3rem 0 0.3rem;
+    box-shadow:
+        inset 0.2rem 0.2rem 0.2rem $main_text_color,
+        inset -0.2rem -0.2rem 0.2rem $main_text_color;
+}
+
+.cpu_icon {
+    font-size: 24px; // Preserve font size
+    margin: 0 0.2rem -0.3rem 0;
+}
+
+.temp_icon {
+    font-size: 20px; // Preserve font size
+    margin: 0.525rem 0 -0.3125rem 0;
+}
+
+.temp_text {
+    margin: 0 0 -0.625rem 0;
+}
+
+.ram_icon {
+    font-size: 20px; // Preserve font size
+}
+
+.resource_monitor {
+    background-color: rgba(255, 255, 255, 0);
+    margin-bottom: 0.625rem;
+}
+
 // @@@@@@@@@@@@@@@@@@
 // vertical bar
 // @@@@@@@@@@@@@@@@@@
 .bar_itself {
-    border-radius: 5px;
 }
 
-.bar_contents {
+.bar_contents_bottom {
     background-color: rgba(255, 255, 255, 0);
-    border-radius: 5px;
 }
 
 .centerbox {
@@ -189,37 +232,37 @@ calendar:hover {
 // @@@@@@@@@@@@@@@@@@
 .bookshelf {
     background: linear-gradient(to bottom, rgba($main_background_color, 0.9), rgba($main_background_color, 0.9));
-    border: 4px solid $border_accent_golder_color; //#5c4033;
-    box-shadow: inset 0 0 0 8px $accent_dark_color2;
-    padding: 8px 8px 0px 8px;
-    border-radius: 8px;
-    /* padding: 0px 20px; */
-    min-width: 100px;
-    font-size: 24px;
+    border: 0.25rem solid $border_accent_golder_color;
+    box-shadow: inset 0 0 0 0.5rem $accent_dark_color2;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    border-radius: 0.5rem;
+    min-width: 6.25rem;
+    font-size: 24px; // Preserve font size
 }
 
 $title_text_color: $main_background_color;
 $title_stroke_color: $main_text_color;
+
 .book_title {
     color: $title_text_color;
-    font-size: 16px;
+    font-size: 16px; // Preserve font size
     font-weight: bold;
     text-shadow:
         $text_stroke_width $text_stroke_width 0 $title_stroke_color,
-        2px -2px 0 $title_stroke_color,
-        -2px 2px 0 $title_stroke_color,
-        -2px -2px 0 $title_stroke_color,
-        2px 0px 0 $title_stroke_color,
-        0px 2px 0 $title_stroke_color,
-        -2px 0px 0 $title_stroke_color,
-        0px -2px 0 $title_stroke_color;
+        0.125rem -0.125rem 0 $title_stroke_color,
+        -0.125rem 0.125rem 0 $title_stroke_color,
+        -0.125rem -0.125rem 0 $title_stroke_color,
+        0.125rem 0 0 $title_stroke_color,
+        0 0.125rem 0 $title_stroke_color,
+        -0.125rem 0 0 $title_stroke_color,
+        0 -0.125rem 0 $title_stroke_color;
 }
 
 .shelf {
     background-color: rgba(255, 255, 255, 0);
-    padding: 0px 5px 0px 5px;
-    border-bottom: 12px solid $accent_dark_color2;
-    box-shadow: inset 0 6px 12px rgba(#5c4033, 0.8);
+    padding: 0 0.3125rem 0 0.3125rem;
+    border-bottom: 0.75rem solid $accent_dark_color2;
+    box-shadow: inset 0 0.375rem 0.75rem rgba(#5c4033, 0.8);
 }
 
 .book_progress_icons {
@@ -228,11 +271,10 @@ $title_stroke_color: $main_text_color;
 
 .book_progress_icon {
     opacity: 1;
-    /* margin-right: 10px; */
-    margin: -2px 0px -9px 0;
+    margin: -0.125rem 0 -0.5625rem 0;
     color: $secondary_accent_color;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-    font-size: 48px;
+    text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.5);
+    font-size: 48px; // Preserve font size
 }
 
 .book_progress_icon.empty {
@@ -241,15 +283,12 @@ $title_stroke_color: $main_text_color;
 }
 
 .title_length_adjuster {
-    /* margin-left: -250px; */
-    /* opacity: 0; */
 }
+
 // @@@@@@@@@@@@@@@@@@
 // debug
 // @@@@@@@@@@@@@@@@@@
 .debug_border {
-    /* border: 3px solid lightblue; */
-    /* margin: -3px; */
 }
 
 .no_background {

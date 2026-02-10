@@ -79,7 +79,7 @@
         :onhover "eww open battery_tooltip_window"
         :onhoverlost "eww close battery_tooltip_window"
         :class "debug_border"
-            (box ; need this extra box so that the eventbox hover area covers the whole bar
+            (box ; need this extra box so that the eventbox hover area covers the whole width
                 :class "battery"
                 :halign "center"
                 :orientation "v"
@@ -114,6 +114,8 @@
     :geometry (geometry
                 :x "0.5%"
                 :y "1%"
+                ; :width "10%"
+                ; :height "10%"
                 :anchor "left bottom"
               )
     :stacking "fg"
@@ -121,7 +123,33 @@
     (battery_tooltip_widget)
 )
 
-;; @@@@@@@@@@@
+; @@@@@@@@@
+; cpu and ram
+; @@@@@@@@@
+(defpoll cpu_usage :interval "1s" "eww get EWW_CPU > ./data/cpu.json")
+(defpoll cpu_temp :interval "1s" "eww get EWW_TEMPS > ./data/temps.json")
+(defpoll ram_usage :interval "1s" "eww get EWW_RAM > ./data/ram.json")
+
+(defwidget simple_monitor [icon ?icon_class text ?text_class]
+    (box
+        :class "simple_monitor_class debug_border"
+        :orientation "v"
+        (label :text icon :class "${icon_class} debug_border")
+        (label :text text :class "${text_class} debug_border")
+    )
+)
+
+; ╬
+(defwidget cpu_widget []
+    (simple_monitor :icon "✧" :text "${round(EWW_CPU.avg, 0)}%" :icon_class "cpu_icon" :text_class "cpu_text")
+)
+(defwidget cpu_temp_widget []
+    (simple_monitor :icon "╽" :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :icon_class "temp_icon" :text_class "temp_text")
+)
+(defwidget ram_widget []
+  (simple_monitor :icon "╥" :text "${round(EWW_RAM.used_mem_perc, 0)}%" :icon_class "ram_icon" :text_class "ram_text")
+)
+  ;; @@@@@@@@@@@
 ;; Sys tray
 ;; @@@@@@@@@@
 (defwidget my_systray []
@@ -211,14 +239,16 @@
     (currently_reading :reading_data currently_reading_data)
 )
 
-
+; @@@@@@@@@@@@@@@@@
+; bar
+; @@@@@@@@@@@@@@@@@@
 (defwindow my_vertical_bar
         :monitor 0
         :geometry (geometry
                     :x "0px"
                     :y "0px"
                     :width "20px"
-                    :height "99%"
+                    :height "100%"
                     :anchor "center left")
         :stacking "fg"
         :exclusive true
@@ -236,11 +266,15 @@
       (clock
           :valignment "center"
       )
-      (box
+
+        (box
         :orientation "v"
-        :class "bar_contents"
+        :class "bar_contents_bottom"
         :space-evenly false
         :valign "end"
+        (cpu_widget)
+        (cpu_temp_widget)
+        (ram_widget)
         (my_systray)
         (battery)
       )
