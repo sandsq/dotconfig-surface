@@ -41,7 +41,7 @@ progressbar {
 
 /* background color of bar */
 progressbar > trough {
-    min-width: 45px;
+    min-width: 25px;
     background-color: $main_accent_color;
     border: 0px;
     border-radius: 5px;
@@ -51,7 +51,7 @@ progressbar > trough {
 progress {
     background-color: $main_text_color;
     border: 0px;
-    min-width: 45px;
+    min-width: 25px;
     border-radius: 5px;
 }
 
@@ -62,16 +62,86 @@ progress {
     background-color: $main_background_color;
     color: $main_text_color;
     border-radius: 5px;
+    padding-bottom: 3px;
 }
 
+.hour {
+    font-size: 16px; // Largest font size for the hour
+    font-weight: bold;
+}
+
+.minute {
+    font-size: 14px; // Medium font size for the minute
+    font-weight: bold;
+    margin: -6px 0px 0px 0px;
+}
+
+.second {
+    font-size: 12px; // Smaller font size for the seconds
+    margin: -4px 0 0 0;
+}
+.clock_icon {
+    margin-bottom: -4px;
+}
+
+.daycycle {
+    font-size: 24px; // Same size as seconds for consistency
+}
+
+.calendar_box {
+    padding: 20px 10px 0 10px;
+    opacity: 0.6;
+    border: 8px solid $main_text_color;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+}
+.calendar_inner {
+    padding: 10px;
+    border: 4px solid red;
+}
+.calendar_itself {
+    padding: 10px 10px 10px 10px;
+}
+calendar:selected {
+    color: blue;
+}
+calendar.header {
+    /* border-top: 4px solid black; */
+    border-bottom: 4px solid black;
+    margin: 5px 0 0 5px;
+}
+calendar.highlight {
+    color: purple;
+}
+calendar.button {
+    color: green;
+}
+calendar:indeterminate {
+    color: rgba($main_text_color, 0.5);
+}
+calendar:hover {
+    background-color: darkblue;
+}
 // @@@@@@@@@@@@@@@@@@
 // battery
 // @@@@@@@@@@@@@@@@@@
 .battery {
-    color: $main_light_color;
     background-color: rgba(255, 255, 255, 0);
 }
+.battery_icon {
+    color: $main_light_color;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 24px;
+}
 
+.battery_tooltip {
+    background-color: $main_background_color;
+    border-radius: 5px;
+    border: 2px solid $main_text_color;
+    padding: 5px;
+    /* min-width: 50px; */
+}
 // @@@@@@@@@@@@@@@@@@
 // vertical bar
 // @@@@@@@@@@@@@@@@@@
@@ -145,7 +215,7 @@ $title_stroke_color: $main_text_color;
     opacity: 1;
     margin-right: 10px;
     color: $secondary_accent_color;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
     font-size: 36px;
 }
 

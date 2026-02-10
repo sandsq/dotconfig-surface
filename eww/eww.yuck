@@ -16,37 +16,109 @@
 ;; @@@@@@@@@@@@@@@@@@@
 ;; Time
 ;; @@@@@@@@@@@@@@@@@@
-(defpoll current_hour :interval "1s" "date '+%I'")
-(defpoll current_minute :interval "1s" "date '+%M'")
-(defpoll current_second :interval "1s" "date '+%S'")
 
 (defwidget clock [valignment]
-  (box
+  (eventbox
+     :onclick "
+       if eww active-windows | grep -q my_calendar_window; then
+         eww close my_calendar_window;
+       else
+         eww open my_calendar_window;
+       fi
+     "
+    (box
       :orientation "v"
       :class "clock debug_border"
       :valign valignment
-      ; :halign "center"
-       current_hour
-       current_minute
-       current_second
+      :space-evenly false
+      (label :text "󰥔" :xalign 0.4 :class "clock_icon")
+    (label :text "${formattime(EWW_TIME, '%H')}" :class "hour")
+    (label :text "${formattime(EWW_TIME, '%M')}" :class "minute")
+    (label :text "${formattime(EWW_TIME, '%S')}" :class "second")
+    ; (label :text "${formattime(EWW_TIME, '%p')}" :class "daycycle")
+    )
+    )
+)
+
+(defwidget my_calendar_widget []
+    (box :class "calendar_box"
+         :orientation "v"
+  (box :class "calendar_inner_box"
+    (calendar
+      :halign "center"
+      :valign "center"
+      :class "calendar_itself"
+    )
+    )
   )
 )
 
+(defwindow my_calendar_window
+  :monitor 0
+  :stacking "fg"
+  :geometry (geometry
+              :x "1%"
+              :y "0%"
+              :anchor "left center"
+            )
+  (my_calendar_widget)
+)
 ;; @@@@@@@@@@@
 ;; Battery
 ;; @@@@@@@@@@
-(defpoll current_battery :interval "1m" "eww get EWW_BATTERY | jq '.BAT1.capacity'") ; | sed 's/$/\%/'")
-(defpoll current_battery_status :interval "1m" "eww get EWW_BATTERY | jq '.BAT1.status'")
-(defpoll current_battery_status_icon :interval "1s" "./scripts/check_battery_status.sh")
+(defpoll current_battery :interval "1m" "./scripts/check_battery_status.sh --capacity")
+(defpoll current_battery_status_icon :interval "1s" "./scripts/check_battery_status.sh --status-icon")
+
+(defpoll remaining_time :interval "1s" "./scripts/check_battery_status.sh --remaining-time")
+(defpoll end_time :interval "1s" "./scripts/check_battery_status.sh --end-time")
+
+
 
 (defwidget battery []
-    (box
-        :orientation "v"
-        :class "battery debug_border"
-        :halign "center"
-        current_battery
-        current_battery_status_icon
+    (eventbox
+        :onhover "eww open battery_tooltip_window"
+        :onhoverlost "eww close battery_tooltip_window"
+        :class "debug_border"
+            (box
+                :class "battery"
+                :halign "center"
+                :orientation "v"
+                (box
+                    :class "battery_icon debug_border"
+                    current_battery_status_icon
+                )
+            )
     )
+)
+(defwidget battery_tooltip_widget []
+    (box :orientation "v"
+        :halign "start"
+        :class "battery_tooltip"
+        (label
+            :halign "start"
+            :text "Battery: ${current_battery}%"
+        )
+        (label
+            :text "Remaining time: ${remaining_time}"
+            :halign "start"
+        )
+        (label
+            :text "End time: ${end_time}"
+            :halign "start"
+        )
+    )
+)
+
+(defwindow battery_tooltip_window
+    :monitor 0
+    :geometry (geometry
+                :x "0.5%"
+                :y "1%"
+                :anchor "left bottom"
+              )
+    :stacking "fg"
+    :exclusive false
+    (battery_tooltip_widget)
 )
 
 ;; @@@@@@@@@@@
@@ -70,11 +142,9 @@
 (defwidget book_progress [title progress]
   (box
       :class "shelf"
-
   (overlay
     :orientation "h"
     :space-evenly false
-
     (box
       :class "book_progress_icons debug_border"
       :space-evenly false
@@ -125,6 +195,18 @@
 )
 
 
+(defwindow my_book_progress
+        :monitor 0
+        :geometry (geometry
+                    :x "1%"
+                    :y "2%"
+                    ; :width "20%"
+                    ; :height "20%"
+                    :anchor "left bottom")
+        :stacking "bg"
+        :exclusive false
+    (currently_reading :reading_data currently_reading_data)
+)
 
 
 (defwindow my_vertical_bar
@@ -158,16 +240,3 @@
         (battery)
       )
   )))
-
-(defwindow my_book_progress
-        :monitor 0
-        :geometry (geometry
-                    :x "1%"
-                    :y "2%"
-                    ; :width "20%"
-                    ; :height "20%"
-                    :anchor "left bottom")
-        :stacking "fg"
-        :exclusive false
-    (currently_reading :reading_data currently_reading_data)
-)
