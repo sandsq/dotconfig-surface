@@ -1,8 +1,9 @@
 $is_lightmode: true;
-
 $main_dark_color: #2c2626;
 $main_light_color: #fbf1c6;
-$accent_dark_color: #203724;
+$border_accent_color: #e6b77b;
+$border_accent_golder_color: #fed078;
+$accent_dark_color: #3f5242;
 $accent_light_color: #33df77;
 $accent_dark_color2: #3e2861;
 $accent_dark_color3: #82313b;
@@ -25,7 +26,7 @@ $text_stroke_width: 2px;
 * {
     /* background-color: rgba(255, 255, 255, 0); */
     all: unset;
-    font-family: "Ubuntu Sans Mono";
+    font-family: "DepartureMono Nerd Font Mono", "Ubuntu Sans Mono";
 }
 
 box {
@@ -35,21 +36,21 @@ box {
 
 /* tiny extra bit of progressbar */
 progressbar {
-    background-color: $main_accent_color;
+    background-color: $border_accent_golder_color;
     border-radius: 5px;
 }
 
 /* background color of bar */
 progressbar > trough {
-    min-width: 25px;
-    background-color: $main_accent_color;
+    min-width: 45px;
+    background-color: $border_accent_golder_color;
     border: 0px;
     border-radius: 5px;
 }
 
 /* color of the actual progress */
 progress {
-    background-color: $main_text_color;
+    background-color: $secondary_accent_color;
     border: 0px;
     min-width: 25px;
     border-radius: 5px;
@@ -58,11 +59,22 @@ progress {
 // @@@@@@@@@@@@@@@@@@
 // clock
 // @@@@@@@@@@@@@@@@@@
+$clock_text_stroke_color: $border_accent_golder_color;
 .clock {
-    background-color: $main_background_color;
+    /* background-color: $main_background_color; */
+    background-color: rgba(0, 0, 0, 0);
     color: $main_text_color;
-    border-radius: 5px;
+    border-radius: 10px;
     padding-bottom: 3px;
+    text-shadow:
+        1px 1px 0 $clock_text_stroke_color,
+        1px -1px 0 $clock_text_stroke_color,
+        -1px 1px 0 $clock_text_stroke_color,
+        -1px -1px 0 $clock_text_stroke_color,
+        1px 0px 0 $clock_text_stroke_color,
+        0px 1px 0 $clock_text_stroke_color,
+        -1px 0px 0 $clock_text_stroke_color,
+        0px -1px 0 $clock_text_stroke_color;
 }
 
 .hour {
@@ -78,47 +90,50 @@ progress {
 
 .second {
     font-size: 12px; // Smaller font size for the seconds
+    font-weight: bold;
     margin: -4px 0 0 0;
 }
 .clock_icon {
-    margin-bottom: -4px;
-}
-
-.daycycle {
-    font-size: 24px; // Same size as seconds for consistency
+    margin-left: 6px;
+    margin-bottom: 0px;
 }
 
 .calendar_box {
+    background-color: $secondary_accent_color;
     padding: 20px 10px 0 10px;
-    opacity: 0.6;
-    border: 8px solid $main_text_color;
+    opacity: 0.9;
+    border: 8px solid $border_accent_color;
     border-radius: 8px;
     font-weight: bold;
     font-size: 18px;
 }
 .calendar_inner {
+    background-color: $secondary_accent_color;
     padding: 10px;
     border: 4px solid red;
 }
 .calendar_itself {
+    background-color: $secondary_accent_color;
+    color: $border_accent_color;
     padding: 10px 10px 10px 10px;
 }
 calendar:selected {
-    color: blue;
+    color: lightblue;
+    font-weight: bold;
 }
 calendar.header {
     /* border-top: 4px solid black; */
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid $border_accent_color;
     margin: 5px 0 0 5px;
 }
 calendar.highlight {
-    color: purple;
+    color: lightcoral;
 }
 calendar.button {
     color: green;
 }
 calendar:indeterminate {
-    color: rgba($main_text_color, 0.5);
+    color: rgba($border_accent_color, 0.5);
 }
 calendar:hover {
     background-color: darkblue;
@@ -130,7 +145,7 @@ calendar:hover {
     background-color: rgba(255, 255, 255, 0);
 }
 .battery_icon {
-    color: $main_light_color;
+    color: $border_accent_golder_color;
     background-color: rgba(255, 255, 255, 0);
     font-size: 24px;
 }
@@ -174,9 +189,9 @@ calendar:hover {
 // @@@@@@@@@@@@@@@@@@
 .bookshelf {
     background: linear-gradient(to bottom, rgba($main_background_color, 0.9), rgba($main_background_color, 0.9));
-    border: 4px solid $main_background_color; //#5c4033;
+    border: 4px solid $border_accent_golder_color; //#5c4033;
     box-shadow: inset 0 0 0 8px $accent_dark_color2;
-    padding: 8px;
+    padding: 8px 8px 0px 8px;
     border-radius: 8px;
     /* padding: 0px 20px; */
     min-width: 100px;
@@ -202,7 +217,7 @@ $title_stroke_color: $main_text_color;
 
 .shelf {
     background-color: rgba(255, 255, 255, 0);
-    padding: 0px 5px;
+    padding: 0px 5px 0px 5px;
     border-bottom: 12px solid $accent_dark_color2;
     box-shadow: inset 0 6px 12px rgba(#5c4033, 0.8);
 }
@@ -213,10 +228,11 @@ $title_stroke_color: $main_text_color;
 
 .book_progress_icon {
     opacity: 1;
-    margin-right: 10px;
+    /* margin-right: 10px; */
+    margin: -2px 0px -9px 0;
     color: $secondary_accent_color;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-    font-size: 36px;
+    font-size: 48px;
 }
 
 .book_progress_icon.empty {

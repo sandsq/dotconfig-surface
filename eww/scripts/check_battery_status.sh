@@ -41,9 +41,11 @@ elif [[ "$1" == "--status-icon" ]]; then
     status=$(cat /sys/class/power_supply/BAT1/status)
 
     if [ "$status" = "Charging" ]; then
-        echo "󱐋"
+        # echo "󱐋"
+        echo "▞"
     else
-        echo ""
+        # echo ""
+        echo "↓"
     fi
     exit 0
 else

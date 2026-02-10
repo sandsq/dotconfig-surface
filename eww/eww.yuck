@@ -31,7 +31,7 @@
       :class "clock debug_border"
       :valign valignment
       :space-evenly false
-      (label :text "󰥔" :xalign 0.4 :class "clock_icon")
+    (label :text "■" :xalign 0.4 :class "clock_icon")
     (label :text "${formattime(EWW_TIME, '%H')}" :class "hour")
     (label :text "${formattime(EWW_TIME, '%M')}" :class "minute")
     (label :text "${formattime(EWW_TIME, '%S')}" :class "second")
@@ -79,13 +79,13 @@
         :onhover "eww open battery_tooltip_window"
         :onhoverlost "eww close battery_tooltip_window"
         :class "debug_border"
-            (box
+            (box ; need this extra box so that the eventbox hover area covers the whole bar
                 :class "battery"
                 :halign "center"
                 :orientation "v"
-                (box
+                (label
                     :class "battery_icon debug_border"
-                    current_battery_status_icon
+                    :text current_battery_status_icon
                 )
             )
     )
@@ -138,6 +138,9 @@
 ;; @@@@@@@@@@@
 (defpoll currently_reading_data :interval "10m" "cat /home/sand/.config/eww/data/currently_reading.json | jq .books")
 (defvar book_icon "")
+; (defvar book_icon "[]")
+; (defvar book_icon2 "▉")
+; (defvar book_icon1 "┇")
 
 (defwidget book_progress [title progress]
   (box
@@ -230,7 +233,9 @@
       :orientation "v"
       :class "centerbox"
       (clock :valignment "start")
-      (clock :valignment "center")
+      (clock
+          :valignment "center"
+      )
       (box
         :orientation "v"
         :class "bar_contents"
