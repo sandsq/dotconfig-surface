@@ -131,44 +131,46 @@
 (defpoll ram_usage :interval "1s" "eww get EWW_RAM > ./data/ram.json")
 (defwidget icon_widget [icon ?icon_class]
     (box
-        :class "icon_widget_class "
+        :class "${icon_class} cancel_background"
         :orientation "v"
-        (label :text icon :class "${icon_class} ")
+        (label :text icon)
     )
 )
 
 (defwidget text_widget [text ?text_class]
     (box
-        :class "text_widget_class "
+        :class "${text_class} cancel_background"
         :orientation "v"
-        (label :text text :class "${text_class} ")
+        (label :text text )
     )
 )
 
 
 ; ╬
-(defwidget cpu_widget []
+(defwidget cpu_widget [?widget_classes]
     (box
+        :orientation "v"
+        :class widget_classes
     (icon_widget :icon "✧" :icon_class "cpu_icon" )
     (text_widget :text "${round(EWW_CPU.avg, 0)}%" :text_class "cpu_text")
     )
 )
 
-(defwidget cpu_temp_widget []
+(defwidget cpu_temp_widget [?widget_classes]
     (box
-        :class "cpu_temp_widget_class"
+        :class widget_classes
         :orientation "v"
         (icon_widget :icon "╽" :icon_class "temp_icon")
-        (text_widget :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :text_class "temp_text_class")
+        (text_widget :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :text_class "temp_text")
     )
 )
 
-(defwidget ram_widget []
+(defwidget ram_widget [?widget_classes]
     (box
-        :class "ram_widget_class"
+        :class widget_classes
         :orientation "v"
         (icon_widget :icon "╥" :icon_class "ram_icon debug_border")
-        (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class debug_border")
+        (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text debug_border")
     )
 )
 
@@ -180,6 +182,7 @@
       :class "tray debug_border"
       :orientation "v"
       :halign "center"
+      :height "100px"
     )
 )
 
@@ -296,10 +299,24 @@
         :space-evenly false
         :valign "end"
         ; :spacing 5
-        ; (cpu_widget)
-        ; (cpu_temp_widget)
-        (icon_widget :icon "╥" :icon_class "ram_icon debug_border") ; if I make a widget combining these two and then try to change the size of one, they will take on the same size for some reason.
-        (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class debug_border")
+        (cpu_widget :widget_classes "resource_widget first_resource_widget")
+        (cpu_temp_widget :widget_classes "resource_widget")
+        (ram_widget :widget_classes "resource_widget last_resource_widget")
+        ; (box :orientation "v"
+        ;     :class "resource_widget first_resource_widget"
+        ; (icon_widget :icon "✧" :icon_class "cpu_icon cancel_background debug_border")
+        ; (text_widget :text "${round(EWW_CPU.avg, 0)}%" :text_class "cpu_text cancel_background debug_border")
+        ; )
+        ; (box :orientation "v"
+        ;     :class "resource_widget"
+        ; (icon_widget :icon "╽" :icon_class "temp_icon cancel_background debug_border")
+        ; (text_widget :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :text_class "temp_text_class cancel_background debug_border")
+        ; )
+        ; (box :orientation "v"
+        ;     :class "resource_widget last_resource_widget"
+        ; (icon_widget :icon "╥" :icon_class "ram_icon cancel_background debug_border") ; if I make a widget combining these two and then try to change the size of one, they will take on the same size for some reason.
+        ; (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class cancel_background debug_border")
+        ; )
         (my_systray)
         (battery)
       )

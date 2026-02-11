@@ -167,14 +167,31 @@ calendar:hover {
 // @@@@@@@@@@@@@
 // resource monitor
 // @@@@@@@@@@@@@
-.simple_monitor_class {
+.resource_widget {
     background-color: $accent_dark_color3;
-    /* font-size: 12px;  */
-    font-weight: bold;
     color: $border_accent_golder_color;
     border-left: 0.1rem solid $border_accent_golder_color;
     border-right: 0.1rem solid $border_accent_golder_color;
+
     margin: 0 0.3rem 0 0.3rem;
+}
+.first_resource_widget {
+    padding-top: 20px;
+}
+.last_resource_widget {
+    padding-bottom: 40px;
+}
+.cancel_background {
+    background-color: rgba(255, 255, 255, 0);
+    color: $border_accent_golder_color;
+    font-size: 11px;
+    font-weight: bold;
+}
+.simple_monitor_class {
+    /* background-color: $accent_dark_color3; */
+    /* font-size: 12px;  */
+    /* font-weight: bold; */
+    /* color: $border_accent_golder_color; */
     /* box-shadow:
         inset 0.7rem 0rem 0.3rem -0.3rem rgba($main_text_color, 0.7),
         inset -0.7rem 0rem 0.3rem -0.3rem rgba($main_text_color, 0.7); */
@@ -202,12 +219,10 @@ calendar:hover {
 
 .ram_icon {
     font-size: 20px;
-    padding-bottom: 100px;
-    margin-bottom: 50px;
 }
 .ram_text {
-    font-size: 12px;
-    /* padding-bottom: 2rem; */
+    font-size: 11px;
+    /* margin-bottom: 100px; */
 }
 .widgets {
     background-color: rgba(255, 255, 255, 0);
@@ -235,6 +250,7 @@ calendar:hover {
 // tray
 // @@@@@@@@@@@@@@@@@@
 .tray {
+    min-height: 100px;
     background-color: rgba(255, 255, 255, 0);
 }
 
@@ -246,7 +262,11 @@ calendar:hover {
 // currently reading
 // @@@@@@@@@@@@@@@@@@
 .bookshelf {
-    background: linear-gradient(to bottom, rgba($main_background_color, 0.9), rgba($main_background_color, 0.9));
+    background: linear-gradient(
+        to bottom,
+        rgba($main_background_color, 0.9),
+        rgba($main_background_color, 0.9)
+    );
     border: 0.25rem solid $border_accent_golder_color;
     box-shadow: inset 0 0 0 0.5rem $accent_dark_color2;
     padding: 0.5rem 0.5rem 0 0.5rem;
@@ -304,7 +324,7 @@ $title_stroke_color: $main_text_color;
 // debug
 // @@@@@@@@@@@@@@@@@@
 .debug_border {
-    border: 1px solid lightblue;
+    /* border: 1px solid lightblue; */
 }
 
 .no_background {
