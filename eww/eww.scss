@@ -176,10 +176,12 @@ calendar:hover {
     margin: 0 0.3rem 0 0.3rem;
 }
 .first_resource_widget {
-    padding-top: 20px;
+    padding-top: 15px;
+    border-top: 0.1rem solid $border_accent_golder_color;
 }
 .last_resource_widget {
     padding-bottom: 40px;
+    border-bottom: 0.1rem solid $border_accent_golder_color;
 }
 .cancel_background {
     background-color: rgba(255, 255, 255, 0);
@@ -214,7 +216,7 @@ calendar:hover {
 
 .temp_text {
     font-size: 12px;
-    margin: 0 0 -1rem 0;
+    margin: -0.7rem 0 -1rem 0;
 }
 
 .ram_icon {

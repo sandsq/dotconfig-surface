@@ -56,4 +56,11 @@
   "file_types": {
     "Scheme": ["*.yuck"],
   },
+  "lsp": {
+    "hyprland": {
+      "binary": {
+        "path": "/nix/store/1zni0ppcd4zq75mamqdp1zqyqjn7w4d7-user-environment/bin/hyprls",
+      },
+    },
+  },
 }

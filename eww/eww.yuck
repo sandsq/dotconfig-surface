@@ -174,7 +174,7 @@
     )
 )
 
-  ;; @@@@@@@@@@@
+;; @@@@@@@@@@@
 ;; Sys tray
 ;; @@@@@@@@@@
 (defwidget my_systray []
@@ -186,6 +186,14 @@
     )
 )
 
+;; @@@@@@@@@@
+;; workspaces
+;; @@@@@@@@@@
+(defpoll initial_workspace :interval "1h" "hyprctl activeworkspace -j | jq .id")
+(deflisten current_workspace :initial -1 `scripts/get_current_workspace.sh`)
+(defwidget current_workspace_widget []
+    (label :text "${(current_workspace == -1 ? initial_workspace : current_workspace)}")
+)
 ;; @@@@@@@@@@@@@@@@@@@
 ;; @@@@@@@@@@@
 ;; Currently Reading
@@ -288,7 +296,12 @@
   (centerbox
       :orientation "v"
       :class "centerbox"
-      (clock :valignment "start")
+      ; (clock :valignment "start")
+      (box
+          :style "background-color: rgba(0, 0, 0, 0);"
+          :orientation "v"
+          (current_workspace_widget)
+      )
       (clock
           :valignment "center"
       )
