@@ -13,3 +13,6 @@
 !hypr/*
 
 hypr/hyprland.conf
+
+!zed
+!zed/*
