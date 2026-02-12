@@ -3,6 +3,12 @@
 ;; @@@@@@@@@@
 ; place elements at milestone heights so battery % can be checked with bar
 ; color change when battery under a certain amount
+;
+; @@@@@@
+; notes
+; @@@@@
+; in a widget, outermost *boxes themselves don't pad/margin out I think
+
 
 ;; @@@@@@@@@@@@@@@@@@
 ;; Sizing vars
@@ -189,19 +195,23 @@
 ;; @@@@@@@@@@
 ;; workspaces
 ;; @@@@@@@@@@
-; (defpoll i_workspace :interval "1h" "hyprctl activeworkspace -j | jq '.id'")
-; (defpoll initial_workspaces :interval "1h" "hyprctl workspaces -j | jq 'sort_by(.id)'")
 (defpoll initial_workspaces :interval "1h" "jq -s -c '{active: .[0], list: .[1]}' <(hyprctl activeworkspace -j) <(hyprctl workspaces -j | jq -c 'sort_by(.id)')")
-; (deflisten c_workspace :initial -1 `scripts/get_current_workspace.sh`)
-; (deflisten current_workspaces :initial -1 `scripts/process_workspaces.sh`)
 (deflisten workspace_info :initial -1 `scripts/process_workspaces.sh`)
-; (defvar current_workspaces "[{\"id\": 1}]")
+;
+(defvar workspace_icon_mapping `{
+    "1": "",
+    "2": "ƒ",
+    "4": "›"
+}`)
 (defwidget button_widget [?button_class value]
     (eventbox
-        ; :onclick "hyprctl dispatch workspace ${value}"
-        :class "${button_class} ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))}"
+        :onclick "hyprctl dispatch workspace ${value}"
+        :class "workspaces_button_widget ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))}"
+        (label :class "${button_class}  debug_border"
+        ; :halign "start"
         ; "${workspace_info.active.id}"
-        value
+        :text `${value}:${workspace_icon_mapping[value]}`
+        )
         ; "${initial_workspaces.active.id}"
         )
 )
@@ -212,7 +222,7 @@
         :space-evenly false
         (for workspace in "${(workspace_info == -1 ? initial_workspaces.list : workspace_info.list)}"
             (button_widget
-                :button_class "workspaces_button"
+                :button_class "workspaces_button_text"
                 ; "workspaces_button ${(current_workspace != -1 ? (current_workspace == workspace.id ? 'active_workspace' : '') : (initial_workspace == workspace.id ? 'active_workspace' : ''))} debug_border"
                 :value "${workspace.id}")
         )

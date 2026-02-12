@@ -55,18 +55,11 @@ progress {
 // @@@@@@@@@@@@@@@@@
 // workspaces
 // @@@@@@@@@@@@@@@@@
-.workspaces_button {
-}
-.workspaces_button:hover {
-    background-color: $main_accent_color;
-}
-.active_workspace {
-    background-color: $accent_dark_color3;
-}
+
 $stroke_color: $main_text_color;
-.current_workspaces {
-    background-color: rgba(0, 0, 0, 0);
-    margin-bottom: 100px;
+.workspaces_button_text {
+    /* margin: 1rem; */
+    padding: 1rem;
     color: $border_accent_golder_color;
     font-weight: bold;
     text-shadow:
@@ -78,6 +71,20 @@ $stroke_color: $main_text_color;
         0 0.0625rem 0 $stroke_color,
         -0.0625rem 0 0 $stroke_color,
         0 -0.0625rem 0 $stroke_color;
+}
+
+.workspaces_button_widget:hover {
+    background-color: $main_accent_color;
+}
+.active_workspace {
+    background-color: $accent_dark_color3;
+}
+.active_workspace:hover {
+    background-color: rgba($accent_dark_color3, 0.5);
+}
+.current_workspaces {
+    /* margin-bottom: 100px; */
+    background-color: rgba(0, 0, 0, 0);
 }
 // @@@@@@@@@@@@@@@@@@
 // clock
