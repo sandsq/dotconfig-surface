@@ -2,7 +2,7 @@
 
 handle() {
   case $1 in
-    workspace*) hyprctl activeworkspace -j | jq .id;;
+    workspacev2*) hyprctl activeworkspace -j | jq .id;;
     # activewindow*) $1 ;;
   esac
 }

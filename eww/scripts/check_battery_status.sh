@@ -19,7 +19,7 @@ fi
 # status=$(eww get EWW_BATTERY | jq -r '.BAT1.status')
 if [[ "$1" == "--capacity" ]]; then
     cat /sys/class/power_supply/BAT1/capacity
-    exit 0
+    # exit 0
 elif [[ "$1" == "--status" ]]; then
     status=$(cat /sys/class/power_supply/BAT1/status)
 elif [[ "$1" == "--remaining-time" ]]; then

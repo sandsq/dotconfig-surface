@@ -182,18 +182,46 @@
       :class "tray debug_border"
       :orientation "v"
       :halign "center"
-      :height "100px"
+      :height 100
     )
 )
 
 ;; @@@@@@@@@@
 ;; workspaces
 ;; @@@@@@@@@@
-(defpoll initial_workspace :interval "1h" "hyprctl activeworkspace -j | jq .id")
-(deflisten current_workspace :initial -1 `scripts/get_current_workspace.sh`)
-(defwidget current_workspace_widget []
-    (label :text "${(current_workspace == -1 ? initial_workspace : current_workspace)}")
+; (defpoll i_workspace :interval "1h" "hyprctl activeworkspace -j | jq '.id'")
+; (defpoll initial_workspaces :interval "1h" "hyprctl workspaces -j | jq 'sort_by(.id)'")
+(defpoll initial_workspaces :interval "1h" "jq -s -c '{active: .[0], list: .[1]}' <(hyprctl activeworkspace -j) <(hyprctl workspaces -j | jq -c 'sort_by(.id)')")
+; (deflisten c_workspace :initial -1 `scripts/get_current_workspace.sh`)
+; (deflisten current_workspaces :initial -1 `scripts/process_workspaces.sh`)
+(deflisten workspace_info :initial -1 `scripts/process_workspaces.sh`)
+; (defvar current_workspaces "[{\"id\": 1}]")
+(defwidget button_widget [?button_class value]
+    (eventbox
+        ; :onclick "hyprctl dispatch workspace ${value}"
+        :class "${button_class} ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))}"
+        ; "${workspace_info.active.id}"
+        value
+        ; "${initial_workspaces.active.id}"
+        )
 )
+(defwidget current_workspaces_widget []
+    (box
+        :class "current_workspaces"
+        :orientation "v"
+        :space-evenly false
+        (for workspace in "${(workspace_info == -1 ? initial_workspaces.list : workspace_info.list)}"
+            (button_widget
+                :button_class "workspaces_button"
+                ; "workspaces_button ${(current_workspace != -1 ? (current_workspace == workspace.id ? 'active_workspace' : '') : (initial_workspace == workspace.id ? 'active_workspace' : ''))} debug_border"
+                :value "${workspace.id}")
+        )
+    )
+    ; (label
+        ; :text "${(current_workspaces == -1 ? initial_workspace : current_workspace[1].id)}"
+        ; :truncate false)
+)
+; (deflisten all_workspaces :initial "" `scripts/get_current_workspace.sh`)
 ;; @@@@@@@@@@@@@@@@@@@
 ;; @@@@@@@@@@@
 ;; Currently Reading
@@ -276,6 +304,36 @@
 ; @@@@@@@@@@@@@@@@@
 ; bar
 ; @@@@@@@@@@@@@@@@@@
+(defwidget bar_widget_bottom []
+    (box
+            :orientation "v"
+            :class "bar_contents_bottom"
+            :space-evenly false
+            :valign "end"
+            ; :spacing 5
+            (cpu_widget :widget_classes "resource_widget first_resource_widget")
+            (cpu_temp_widget :widget_classes "resource_widget")
+            (ram_widget :widget_classes "resource_widget last_resource_widget")
+            ; (box :orientation "v"
+            ;     :class "resource_widget first_resource_widget"
+            ; (icon_widget :icon "✧" :icon_class "cpu_icon cancel_background debug_border")
+            ; (text_widget :text "${round(EWW_CPU.avg, 0)}%" :text_class "cpu_text cancel_background debug_border")
+            ; )
+            ; (box :orientation "v"
+            ;     :class "resource_widget"
+            ; (icon_widget :icon "╽" :icon_class "temp_icon cancel_background debug_border")
+            ; (text_widget :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :text_class "temp_text_class cancel_background debug_border")
+            ; )
+            ; (box :orientation "v"
+            ;     :class "resource_widget last_resource_widget"
+            ; (icon_widget :icon "╥" :icon_class "ram_icon cancel_background debug_border") ; if I make a widget combining these two and then try to change the size of one, they will take on the same size for some reason.
+            ; (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class cancel_background debug_border")
+            ; )
+            (my_systray)
+            (battery)
+          )
+)
+
 (defwindow my_vertical_bar
         :monitor 0
         :geometry (geometry
@@ -289,7 +347,7 @@
 (overlay
   :class "bar_itself"
   (progress
-      :value current_battery
+      :value "${EWW_BATTERY.BAT1.capacity}"
       :orientation "v"
       :flipped true
   )
@@ -297,40 +355,15 @@
       :orientation "v"
       :class "centerbox"
       ; (clock :valignment "start")
-      (box
-          :style "background-color: rgba(0, 0, 0, 0);"
-          :orientation "v"
-          (current_workspace_widget)
+      ; (box
+          ; :style "background-color: rgba(0, 0, 0, 0);"
+          ; :orientation "v"
+      (current_workspaces_widget
       )
+      ; )
       (clock
           :valignment "center"
       )
+      (bar_widget_bottom)
 
-        (box
-        :orientation "v"
-        :class "bar_contents_bottom"
-        :space-evenly false
-        :valign "end"
-        ; :spacing 5
-        (cpu_widget :widget_classes "resource_widget first_resource_widget")
-        (cpu_temp_widget :widget_classes "resource_widget")
-        (ram_widget :widget_classes "resource_widget last_resource_widget")
-        ; (box :orientation "v"
-        ;     :class "resource_widget first_resource_widget"
-        ; (icon_widget :icon "✧" :icon_class "cpu_icon cancel_background debug_border")
-        ; (text_widget :text "${round(EWW_CPU.avg, 0)}%" :text_class "cpu_text cancel_background debug_border")
-        ; )
-        ; (box :orientation "v"
-        ;     :class "resource_widget"
-        ; (icon_widget :icon "╽" :icon_class "temp_icon cancel_background debug_border")
-        ; (text_widget :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :text_class "temp_text_class cancel_background debug_border")
-        ; )
-        ; (box :orientation "v"
-        ;     :class "resource_widget last_resource_widget"
-        ; (icon_widget :icon "╥" :icon_class "ram_icon cancel_background debug_border") ; if I make a widget combining these two and then try to change the size of one, they will take on the same size for some reason.
-        ; (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class cancel_background debug_border")
-        ; )
-        (my_systray)
-        (battery)
-      )
   )))

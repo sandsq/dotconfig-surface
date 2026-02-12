@@ -7,6 +7,7 @@ $accent_dark_color: #3f5242;
 $accent_light_color: #33df77;
 $accent_dark_color2: #3e2861;
 $accent_dark_color3: #82313b;
+$accent_book1_alt_color: #0c4ea6;
 
 $main_background_color: $main_light_color;
 $main_text_color: $main_dark_color;
@@ -19,6 +20,7 @@ $text_stroke_width: 0.125rem;
     $main_accent_color: $accent_dark_color;
     $secondary_accent_color: $accent_light_color;
 }
+$theme_border_radius: 0px;
 
 // @@@@@@@@@@@@@@@@@@
 // Global Styles
@@ -26,6 +28,7 @@ $text_stroke_width: 0.125rem;
 * {
     all: unset;
     font-family: "DepartureMono Nerd Font Mono", "Ubuntu Sans Mono";
+    /* opacity: 0.95; */
 }
 
 box {
@@ -47,9 +50,35 @@ progress {
     background-color: $secondary_accent_color;
     border: 0;
     min-width: 2.5rem;
-    border-radius: 0;
+    border-radius: $theme_border_radius;
 }
-
+// @@@@@@@@@@@@@@@@@
+// workspaces
+// @@@@@@@@@@@@@@@@@
+.workspaces_button {
+}
+.workspaces_button:hover {
+    background-color: $main_accent_color;
+}
+.active_workspace {
+    background-color: $accent_dark_color3;
+}
+$stroke_color: $main_text_color;
+.current_workspaces {
+    background-color: rgba(0, 0, 0, 0);
+    margin-bottom: 100px;
+    color: $border_accent_golder_color;
+    font-weight: bold;
+    text-shadow:
+        0.0625rem 0.0625rem 0 $stroke_color,
+        0.0625rem -0.0625rem 0 $stroke_color,
+        -0.0625rem 0.0625rem 0 $stroke_color,
+        -0.0625rem -0.0625rem 0 $stroke_color,
+        0.0625rem 0 0 $stroke_color,
+        0 0.0625rem 0 $stroke_color,
+        -0.0625rem 0 0 $stroke_color,
+        0 -0.0625rem 0 $stroke_color;
+}
 // @@@@@@@@@@@@@@@@@@
 // clock
 // @@@@@@@@@@@@@@@@@@
@@ -57,7 +86,7 @@ $clock_text_stroke_color: $border_accent_golder_color;
 .clock {
     background-color: rgba(0, 0, 0, 0);
     color: $main_text_color;
-    border-radius: 0.625rem;
+    border-radius: $theme_border_radius;
     padding-bottom: 0.1875rem;
     text-shadow:
         0.0625rem 0.0625rem 0 $clock_text_stroke_color,
@@ -97,7 +126,7 @@ $clock_text_stroke_color: $border_accent_golder_color;
     padding: 1.25rem 0.625rem 0 0.625rem;
     opacity: 0.9;
     border: 0.5rem solid $border_accent_color;
-    border-radius: 0.5rem;
+    border-radius: $theme_border_radius;
     font-weight: bold;
     font-size: 18px;
 }
@@ -156,10 +185,10 @@ calendar:hover {
 .battery_tooltip {
     background-color: $border_accent_golder_color;
     color: $main_text_color;
-    border-radius: 0.3125rem;
+    border-radius: $theme_border_radius;
     border: 0.25rem solid $secondary_accent_color;
     padding: 0.3125rem;
-    min-width: 20rem;
+    min-width: 22rem;
     font-weight: bold;
     font-size: 18px;
 }
@@ -272,7 +301,7 @@ calendar:hover {
     border: 0.25rem solid $border_accent_golder_color;
     box-shadow: inset 0 0 0 0.5rem $accent_dark_color2;
     padding: 0.5rem 0.5rem 0 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: $theme_border_radius;
     min-width: 6.25rem;
     font-size: 24px;
 }
@@ -326,7 +355,7 @@ $title_stroke_color: $main_text_color;
 // debug
 // @@@@@@@@@@@@@@@@@@
 .debug_border {
-    /* border: 1px solid lightblue; */
+    border: 1px solid lightblue;
 }
 
 .no_background {
