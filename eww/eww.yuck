@@ -181,33 +181,43 @@
 )
 (defvar volume_icon "◄")
 
-(defpoll volume_value :interval "1s" "wpctl get-volume @DEFAULT_SINK@")
+; (defpoll volume_value :interval "1s" "wpctl get-volume @DEFAULT_SINK@")
+(defpoll initial_volume :interval "1h" "wpctl get-volume @DEFAULT_SINK@")
+(deflisten volume_value :initial -1 `tail -f data/current_volume.txt`)
 
-(defwidget volume_widget []
-    ; (eventbox
-    ;     :onclick `
-    ;       if eww active-windows | grep -q volume_window; then
-    ;         eww close volume_window;
-    ;       else
-    ;         eww open volume_window;
-    ;       fi
-    ;     `
-    ;     (box
-    ;         :class "volume_widget"
-    ;         :orientation "v"
-    ;         :space-evenly false
-    ;         (label :class "volume_icon" :text volume_icon)
-    ;         (label :class "volume_text" :text "${volume_value}%")
-    ;     )
-    ; )
-    (label :text "pl")
+(defwidget volume_widget [?widget_classes]
+    (box :class widget_classes
+    (eventbox
+        :onclick `
+          if eww active-windows | grep -q volume_window; then
+            eww close volume_window;
+          else
+            eww open volume_window;
+          fi
+        `
+        ; :class widget_classes
+        (box
+            ; :class widget_classes
+            :orientation "v"
+            :space-evenly false
+            (icon_widget :icon volume_icon
+               :icon_class "volume_icon debug_border"
+            )
+            (text_widget :text "${round(replace(volume_value, 'Volume: ', '') * 100, 0)}%"
+                :text_class "volume_text debug_border"
+            )
+            ; (label :class "volume_icon" :text volume_icon)
+            ; (label :class "volume_text" :text "${round(replace(volume_value, 'Volume: ', '') * 100, 0)}%")
+        )
+        )
+    )
 )
 
 (defwindow volume_window
   :monitor 0
   :geometry (geometry
-              :x "2%"
-              :y "20%"
+              :x "0.5%"
+              :y "14%"
               :width "220px"
               :height "80px"
               :anchor "left bottom")
@@ -224,10 +234,11 @@
       :hexpand true
       :min 0
       :max 100
-      :value 11
-      :onchange "echo hello >> /home/sand/.config/eww/data/scale.txt"
+      :value "${(volume_value == -1 ? round(replace(initial_volume, 'Volume: ', '') * 100, 0) : replace(volume_value, 'Volume: ', '') * 100)}"
+      :onchange "scripts/set_volume.sh {}"
       )
-    (label :text "${volume_value}%" :halign "center")
+    ; (label :text "${round(replace(volume_value, 'Volume: ', '') * 100, 0)}%"
+       ; :halign "center")
   )
   )
 )
@@ -393,7 +404,8 @@
             ; :spacing 5
             (cpu_widget :widget_classes "resource_widget first_resource_widget")
             (cpu_temp_widget :widget_classes "resource_widget")
-            (ram_widget :widget_classes "resource_widget last_resource_widget")
+            (ram_widget :widget_classes "resource_widget")
+            (volume_widget :widget_classes "volume_widget resource_widget last_resource_widget")
             ; (box :orientation "v"
             ;     :class "resource_widget first_resource_widget"
             ; (icon_widget :icon "✧" :icon_class "cpu_icon cancel_background debug_border")
@@ -409,7 +421,6 @@
             ; (icon_widget :icon "╥" :icon_class "ram_icon cancel_background debug_border") ; if I make a widget combining these two and then try to change the size of one, they will take on the same size for some reason.
             ; (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class cancel_background debug_border")
             ; )
-            ; (volume_widget)
             (my_systray)
             (battery)
           )

@@ -300,7 +300,6 @@ calendar:hover {
 }
 .ram_text {
     font-size: 11px;
-    /* margin-bottom: 100px; */
 }
 .widgets {
     background-color: rgba(255, 255, 255, 0);
@@ -314,25 +313,44 @@ calendar:hover {
 // volume
 // @@@@@@@@@
 
+.volume_icon {
+    font-size: 20px;
+    margin-top: 0.5rem;
+}
+.volume_text {
+    font-size: 11px;
+    font-weight: bold;
+}
+.volume_widget {
+    /* padding: 10rem; */
+    /* margin: 10rem; */
+    /* background-color: rgba(255, 255, 255, 0); */
+    /* margin: 0 0.3rem 0 0.3rem; */
+}
+.volume_outer {
+    background-color: $secondary_accent_color;
+    border: 0.5rem solid $border_accent_golder_color;
+}
 .volume_outer slider {
     /* background-color: green; */
     /* all: unset; */
     /* background-color: red; */
     /* color: red; */
     all: unset;
-    color: purple;
+    /* color: purple; */
+    /* background-color: purple; */
 }
 .volume_popup scale trough highlight {
     all: unset;
-    background-color: lightblue;
+    background-color: $border_accent_golder_color;
 }
 
 .volume_popup scale trough {
     all: unset;
-    background-color: red;
-    border-radius: 100px;
-    min-height: 5px;
-    min-width: 50px;
+    background-color: rgba($border_accent_golder_color, 0.4);
+    border-radius: 0px;
+    min-height: 10px;
+    min-width: 100px;
     margin: 0 10px 0 20px;
 }
 // @@@@@@@@@@@@@@@@@@
