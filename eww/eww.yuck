@@ -54,6 +54,7 @@
       :halign "center"
       :valign "center"
       :class "calendar_itself"
+      :show-details true
     )
     )
   )
@@ -63,7 +64,7 @@
   :monitor 0
   :stacking "fg"
   :geometry (geometry
-              :x "1%"
+              :x "0.5%"
               :y "0%"
               :anchor "left center"
             )

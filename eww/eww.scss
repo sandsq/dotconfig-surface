@@ -26,7 +26,7 @@ $theme_border_radius: 0px;
 // Global Styles
 // @@@@@@@@@@@@@@@@@@
 * {
-    /* all: unset; */
+    /* all: unset;  */
     font-family: "DepartureMono Nerd Font Mono", "Ubuntu Sans Mono";
     /* opacity: 0.95; */
 }
@@ -170,7 +170,7 @@ $clock_text_stroke_color: $border_accent_golder_color;
 
 .calendar_box {
     background-color: $secondary_accent_color;
-    padding: 1.25rem 0.625rem 0 0.625rem;
+    padding: 1rem 0.6rem 0 0.6rem;
     opacity: 0.9;
     border: 0.5rem solid $border_accent_color;
     border-radius: $theme_border_radius;
@@ -178,10 +178,9 @@ $clock_text_stroke_color: $border_accent_golder_color;
     font-size: 18px;
 }
 
-.calendar_inner {
+.calendar_inner_box {
     background-color: $secondary_accent_color;
     padding: 0.625rem;
-    /* border: 0.25rem solid red; */
 }
 
 .calendar_itself {
@@ -189,9 +188,12 @@ $clock_text_stroke_color: $border_accent_golder_color;
     color: $border_accent_color;
     padding: 0.625rem;
 }
-
+calendar {
+    all: unset; // need this otherwise the calendar will have weird white lines
+    /* background-color: $secondary_accent_color; */
+}
 calendar:selected {
-    color: lightblue;
+    color: mintcream;
     font-weight: bold;
 }
 
@@ -201,11 +203,11 @@ calendar.header {
 }
 
 calendar.highlight {
-    color: lightcoral;
+    color: $border_accent_color;
 }
 
 calendar.button {
-    color: green;
+    color: $border_accent_color;
 }
 
 calendar:indeterminate {
@@ -213,7 +215,7 @@ calendar:indeterminate {
 }
 
 calendar:hover {
-    background-color: darkblue;
+    background-color: mintcream;
 }
 
 // @@@@@@@@@@@@@@@@@@
@@ -322,23 +324,14 @@ calendar:hover {
     font-weight: bold;
 }
 .volume_widget {
-    /* padding: 10rem; */
-    /* margin: 10rem; */
-    /* background-color: rgba(255, 255, 255, 0); */
-    /* margin: 0 0.3rem 0 0.3rem; */
 }
 .volume_outer {
     background-color: $secondary_accent_color;
     border: 0.5rem solid $border_accent_golder_color;
 }
+
 .volume_outer slider {
-    /* background-color: green; */
-    /* all: unset; */
-    /* background-color: red; */
-    /* color: red; */
-    all: unset;
-    /* color: purple; */
-    /* background-color: purple; */
+    all: unset; // gets rid of the circle
 }
 .volume_popup scale trough highlight {
     all: unset;
