@@ -12,7 +12,7 @@
 !hypr
 !hypr/*
 
-hypr/hyprland.conf
+hypr/hyprland.conf # built by home manager
 
 !zed
 !zed/*
