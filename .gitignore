@@ -16,3 +16,5 @@ hypr/hyprland.conf
 
 !zed
 !zed/*
+
+!starship.toml

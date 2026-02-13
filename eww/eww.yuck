@@ -199,20 +199,26 @@
 (deflisten workspace_info :initial -1 `scripts/process_workspaces.sh`)
 ;
 (defvar workspace_icon_mapping `{
-    "1": "",
+    "1": "↳",
     "2": "ƒ",
-    "4": "›"
+    "4": "ζ",
+    "5": "◊"
 }`)
 (defwidget button_widget [?button_class value]
     (eventbox
         :onclick "hyprctl dispatch workspace ${value}"
-        :class "workspaces_button_widget ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))}"
-        (label :class "${button_class}  debug_border"
-        ; :halign "start"
-        ; "${workspace_info.active.id}"
-        :text `${value}:${workspace_icon_mapping[value]}`
+        :class "${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))} workspaces_button_widget"
+        (box
+            :orientation "v"
+            :space-evenly false
+            ; (label :class "${button_class}  ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace_text' : '') : (initial_workspaces.active.id == value ? 'active_workspace_text' : ''))} debug_border"
+            ; :text `${value}:`
+            ; )
+            (label
+                :class "${button_class}_icon  ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace_text' : '') : (initial_workspaces.active.id == value ? 'active_workspace_text' : ''))} debug_border"
+                :text `${workspace_icon_mapping[value]?:''}`
+            )
         )
-        ; "${initial_workspaces.active.id}"
         )
 )
 (defwidget current_workspaces_widget []
@@ -220,6 +226,8 @@
         :class "current_workspaces"
         :orientation "v"
         :space-evenly false
+        ; (label :text "╩" :class "workspace_header_icon")
+            ; :style "font-size: 24px; margin-top: -1.4rem;")
         (for workspace in "${(workspace_info == -1 ? initial_workspaces.list : workspace_info.list)}"
             (button_widget
                 :button_class "workspaces_button_text"
@@ -314,6 +322,16 @@
 ; @@@@@@@@@@@@@@@@@
 ; bar
 ; @@@@@@@@@@@@@@@@@@
+(defwidget bar_widget_top []
+    (box
+    :orientation "v"
+    :class "bar_contents_top"
+    :space_evenly false
+    :valign "start"
+    (current_workspaces_widget
+    )
+    )
+)
 (defwidget bar_widget_bottom []
     (box
             :orientation "v"
@@ -364,13 +382,7 @@
   (centerbox
       :orientation "v"
       :class "centerbox"
-      ; (clock :valignment "start")
-      ; (box
-          ; :style "background-color: rgba(0, 0, 0, 0);"
-          ; :orientation "v"
-      (current_workspaces_widget
-      )
-      ; )
+      (bar_widget_top)
       (clock
           :valignment "center"
       )
