@@ -26,7 +26,7 @@ $theme_border_radius: 0px;
 // Global Styles
 // @@@@@@@@@@@@@@@@@@
 * {
-    all: unset;
+    /* all: unset; */
     font-family: "DepartureMono Nerd Font Mono", "Ubuntu Sans Mono";
     /* opacity: 0.95; */
 }
@@ -121,7 +121,7 @@ $stroke_color: $border_accent_golder_color;
     /* color: $main_accent_color; */
 }
 .current_workspaces {
-    margin: -0.5rem 0.3rem 0 0.3rem;
+    margin: -0.5rem 0.3rem 0.2rem 0.3rem;
     background-color: rgba(0, 0, 0, 0);
     /* border: 0.1rem solid $accent_dark_color3; */
     padding: 1rem 0 1rem 0;
@@ -310,6 +310,31 @@ calendar:hover {
     /* margin-bottom: 0.625rem; */
 }
 
+// @@@@@@@@@@@@
+// volume
+// @@@@@@@@@
+
+.volume_outer slider {
+    /* background-color: green; */
+    /* all: unset; */
+    /* background-color: red; */
+    /* color: red; */
+    all: unset;
+    color: purple;
+}
+.volume_popup scale trough highlight {
+    all: unset;
+    background-color: lightblue;
+}
+
+.volume_popup scale trough {
+    all: unset;
+    background-color: red;
+    border-radius: 100px;
+    min-height: 5px;
+    min-width: 50px;
+    margin: 0 10px 0 20px;
+}
 // @@@@@@@@@@@@@@@@@@
 // vertical bar
 // @@@@@@@@@@@@@@@@@@

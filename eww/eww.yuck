@@ -179,6 +179,58 @@
         (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text debug_border")
     )
 )
+(defvar volume_icon "◄")
+
+(defpoll volume_value :interval "1s" "wpctl get-volume @DEFAULT_SINK@")
+
+(defwidget volume_widget []
+    ; (eventbox
+    ;     :onclick `
+    ;       if eww active-windows | grep -q volume_window; then
+    ;         eww close volume_window;
+    ;       else
+    ;         eww open volume_window;
+    ;       fi
+    ;     `
+    ;     (box
+    ;         :class "volume_widget"
+    ;         :orientation "v"
+    ;         :space-evenly false
+    ;         (label :class "volume_icon" :text volume_icon)
+    ;         (label :class "volume_text" :text "${volume_value}%")
+    ;     )
+    ; )
+    (label :text "pl")
+)
+
+(defwindow volume_window
+  :monitor 0
+  :geometry (geometry
+              :x "2%"
+              :y "20%"
+              :width "220px"
+              :height "80px"
+              :anchor "left bottom")
+  :stacking "fg"
+  :exclusive false
+  (box
+      :class "volume_outer"
+  (box
+      :class "volume_popup"
+      :orientation "h"
+    (scale
+      :class "volume_scale"
+      :active true
+      :hexpand true
+      :min 0
+      :max 100
+      :value 11
+      :onchange "echo hello >> /home/sand/.config/eww/data/scale.txt"
+      )
+    (label :text "${volume_value}%" :halign "center")
+  )
+  )
+)
 
 ;; @@@@@@@@@@@
 ;; Sys tray
@@ -255,7 +307,7 @@
       :class "shelf"
   (overlay
     :orientation "h"
-    :space-evenly false
+    ; :space-evenly false
     (box
       :class "book_progress_icons debug_border"
       :space-evenly false
@@ -326,7 +378,7 @@
     (box
     :orientation "v"
     :class "bar_contents_top"
-    :space_evenly false
+    ; :space_evenly false
     :valign "start"
     (current_workspaces_widget
     )
@@ -357,6 +409,7 @@
             ; (icon_widget :icon "╥" :icon_class "ram_icon cancel_background debug_border") ; if I make a widget combining these two and then try to change the size of one, they will take on the same size for some reason.
             ; (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text_class cancel_background debug_border")
             ; )
+            ; (volume_widget)
             (my_systray)
             (battery)
           )
