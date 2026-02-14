@@ -15,14 +15,60 @@
 ;; @@@@@@@@@@@@@@@
 (defvar bar_width "20px")
 
-(defwidget greeter [?text]
+(defwidget value_tester [?text]
   (box :orentation "vertical"
        :halign "center"
        text))
+;; @@@@@@@@@@
+;; workspaces
+;; @@@@@@@@@@
+(defpoll initial_workspaces :interval "1h" "jq -s -c '{active: .[0], list: .[1]}' <(hyprctl activeworkspace -j) <(hyprctl workspaces -j | jq -c 'sort_by(.id)')")
+(deflisten workspace_info :initial -1 `scripts/process_workspaces.sh`)
+;
+(defvar workspace_icon_mapping `{
+    "1": "↳",
+    "2": "ƒ",
+    "4": "ζ",
+    "5": "◊"
+}`)
+(defwidget button_widget [?button_class value]
+    (eventbox
+        :onclick "hyprctl dispatch workspace ${value}"
+        :class "${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))} workspaces_button_widget"
+        (box
+            :orientation "v"
+            :space-evenly false
+            ; (label :class "${button_class}  ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace_text' : '') : (initial_workspaces.active.id == value ? 'active_workspace_text' : ''))} debug_border"
+            ; :text `${value}:`
+            ; )
+            (label
+                :class "${button_class}_icon  ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace_text' : '') : (initial_workspaces.active.id == value ? 'active_workspace_text' : ''))} debug_border"
+                :text `${workspace_icon_mapping[value]?:''}`
+            )
+        )
+        )
+)
+(defwidget current_workspaces_widget []
+    (box
+        :class "current_workspaces"
+        :orientation "v"
+        :space-evenly false
+        ; (label :text "╩" :class "workspace_header_icon")
+            ; :style "font-size: 24px; margin-top: -1.4rem;")
+        (for workspace in "${(workspace_info == -1 ? initial_workspaces.list : workspace_info.list)}"
+            (button_widget
+                :button_class "workspaces_button_text"
+                ; "workspaces_button ${(current_workspace != -1 ? (current_workspace == workspace.id ? 'active_workspace' : '') : (initial_workspace == workspace.id ? 'active_workspace' : ''))} debug_border"
+                :value "${workspace.id}")
+        )
+    )
+    ; (label
+        ; :text "${(current_workspaces == -1 ? initial_workspace : current_workspace[1].id)}"
+        ; :truncate false)
+)
 ;; @@@@@@@@@@@@@@@@@@@
 ;; Time
 ;; @@@@@@@@@@@@@@@@@@
-
 (defwidget clock [valignment]
   (eventbox
      :onclick "
@@ -69,65 +115,6 @@
               :anchor "left center"
             )
   (my_calendar_widget)
-)
-;; @@@@@@@@@@@
-;; Battery
-;; @@@@@@@@@@
-(defpoll current_battery :interval "1m" "./scripts/check_battery_status.sh --capacity")
-(defpoll current_battery_status_icon :interval "1s" "./scripts/check_battery_status.sh --status-icon")
-
-(defpoll remaining_time :interval "1s" "./scripts/check_battery_status.sh --remaining-time")
-(defpoll end_time :interval "1s" "./scripts/check_battery_status.sh --end-time")
-
-
-
-(defwidget battery []
-    (eventbox
-        :onhover "eww open battery_tooltip_window"
-        :onhoverlost "eww close battery_tooltip_window"
-        :class "debug_border"
-            (box ; need this extra box so that the eventbox hover area covers the whole width
-                :class "battery"
-                :halign "center"
-                :orientation "v"
-                (label
-                    :class "battery_icon debug_border"
-                    :text current_battery_status_icon
-                )
-            )
-    )
-)
-(defwidget battery_tooltip_widget []
-    (box :orientation "v"
-        :halign "start"
-        :class "battery_tooltip"
-        (label
-            :halign "start"
-            :text "Battery: ${current_battery}%"
-        )
-        (label
-            :text "Remaining time: ${remaining_time}"
-            :halign "start"
-        )
-        (label
-            :text "End time: ${end_time}"
-            :halign "start"
-        )
-    )
-)
-
-(defwindow battery_tooltip_window
-    :monitor 0
-    :geometry (geometry
-                :x "0.5%"
-                :y "1%"
-                ; :width "10%"
-                ; :height "10%"
-                :anchor "left bottom"
-              )
-    :stacking "fg"
-    :exclusive false
-    (battery_tooltip_widget)
 )
 
 ; @@@@@@@@@
@@ -256,55 +243,67 @@
     )
 )
 
+
+
+;; @@@@@@@@@@@
+;; Battery
 ;; @@@@@@@@@@
-;; workspaces
-;; @@@@@@@@@@
-(defpoll initial_workspaces :interval "1h" "jq -s -c '{active: .[0], list: .[1]}' <(hyprctl activeworkspace -j) <(hyprctl workspaces -j | jq -c 'sort_by(.id)')")
-(deflisten workspace_info :initial -1 `scripts/process_workspaces.sh`)
-;
-(defvar workspace_icon_mapping `{
-    "1": "↳",
-    "2": "ƒ",
-    "4": "ζ",
-    "5": "◊"
-}`)
-(defwidget button_widget [?button_class value]
+(defpoll current_battery :interval "1m" "./scripts/check_battery_status.sh --capacity")
+(defpoll current_battery_status_icon :interval "1s" "./scripts/check_battery_status.sh --status-icon")
+
+(defpoll remaining_time :interval "1s" "./scripts/check_battery_status.sh --remaining-time")
+(defpoll end_time :interval "1s" "./scripts/check_battery_status.sh --end-time")
+
+
+
+(defwidget battery []
     (eventbox
-        :onclick "hyprctl dispatch workspace ${value}"
-        :class "${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace' : '') : (initial_workspaces.active.id == value ? 'active_workspace' : ''))} workspaces_button_widget"
-        (box
-            :orientation "v"
-            :space-evenly false
-            ; (label :class "${button_class}  ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace_text' : '') : (initial_workspaces.active.id == value ? 'active_workspace_text' : ''))} debug_border"
-            ; :text `${value}:`
-            ; )
-            (label
-                :class "${button_class}_icon  ${(workspace_info != -1 ? (workspace_info.active.id == value ? 'active_workspace_text' : '') : (initial_workspaces.active.id == value ? 'active_workspace_text' : ''))} debug_border"
-                :text `${workspace_icon_mapping[value]?:''}`
+        :onhover "eww open battery_tooltip_window"
+        :onhoverlost "eww close battery_tooltip_window"
+        :class "debug_border"
+            (box ; need this extra box so that the eventbox hover area covers the whole width
+                :class "battery"
+                :halign "center"
+                :orientation "v"
+                (label
+                    :class "battery_icon debug_border"
+                    :text current_battery_status_icon
+                )
             )
-        )
-        )
+    )
 )
-(defwidget current_workspaces_widget []
-    (box
-        :class "current_workspaces"
-        :orientation "v"
-        :space-evenly false
-        ; (label :text "╩" :class "workspace_header_icon")
-            ; :style "font-size: 24px; margin-top: -1.4rem;")
-        (for workspace in "${(workspace_info == -1 ? initial_workspaces.list : workspace_info.list)}"
-            (button_widget
-                :button_class "workspaces_button_text"
-                ; "workspaces_button ${(current_workspace != -1 ? (current_workspace == workspace.id ? 'active_workspace' : '') : (initial_workspace == workspace.id ? 'active_workspace' : ''))} debug_border"
-                :value "${workspace.id}")
+(defwidget battery_tooltip_widget []
+    (box :orientation "v"
+        :halign "start"
+        :class "battery_tooltip"
+        (label
+            :halign "start"
+            :text "Battery: ${current_battery}%"
+        )
+        (label
+            :text "Remaining time: ${remaining_time}"
+            :halign "start"
+        )
+        (label
+            :text "End time: ${end_time}"
+            :halign "start"
         )
     )
-    ; (label
-        ; :text "${(current_workspaces == -1 ? initial_workspace : current_workspace[1].id)}"
-        ; :truncate false)
 )
-; (deflisten all_workspaces :initial "" `scripts/get_current_workspace.sh`)
-;; @@@@@@@@@@@@@@@@@@@
+
+(defwindow battery_tooltip_window
+    :monitor 0
+    :geometry (geometry
+                :x "0.5%"
+                :y "1%"
+                ; :width "10%"
+                ; :height "10%"
+                :anchor "left bottom"
+              )
+    :stacking "fg"
+    :exclusive false
+    (battery_tooltip_widget)
+)
 ;; @@@@@@@@@@@
 ;; Currently Reading
 ;; @@@@@@@@@@@
@@ -369,20 +368,31 @@
    )
 )
 
-
-(defwindow my_book_progress
-        :monitor 0
-        :geometry (geometry
-                    :x "1%"
-                    :y "2%"
-                    ; :width "20%"
-                    ; :height "20%"
-                    :anchor "left bottom")
-        :stacking "bg"
-        :exclusive false
-    (currently_reading :reading_data currently_reading_data)
+; @@@@@@@@@@
+; disk usage
+; @@@@@@@@@
+(defpoll disk_info :interval "1m" "eww get EWW_DISK")
+(defwidget disk_usage_widget [drive]
+    (box :class "circle_outer"
+    (circular-progress
+        :class "circle_itself"
+        :value "${round(disk_info[drive].used_perc, 0)}"
+        :thickness 10
+        (box
+            :halign "center"
+            :valign "center"
+            :orientation "v"
+            :class "circle_info"
+            (label
+                :text "${formatbytes(disk_info[drive].free, true, 'si')}"
+            )
+            (label
+                :text "free"
+            )
+        )
+    )
+    )
 )
-
 ; @@@@@@@@@@@@@@@@@
 ; bar
 ; @@@@@@@@@@@@@@@@@@
@@ -454,3 +464,35 @@
       (bar_widget_bottom)
 
   )))
+; @@@@@@@
+; desktop info
+; @@@@@@
+(defwindow my_desktop_window
+        :monitor 0
+        :geometry (geometry
+                    :x "0%"
+                    :y "0%"
+                    ; :width "20%"
+                    ; :height "20%"
+                    :anchor "center center")
+        :stacking "bg"
+        :exclusive false
+    (box
+        :class "desktop_window"
+        :spacing 20
+        :space-evenly false
+        (box
+            :orientation "v"
+
+        (box
+        (disk_usage_widget :drive "/")
+        (disk_usage_widget :drive "/mnt/sd256")
+        )
+        (box
+        (disk_usage_widget :drive "/")
+        (disk_usage_widget :drive "/mnt/sd256")
+        )
+        )
+        (currently_reading :reading_data currently_reading_data)
+    )
+    )

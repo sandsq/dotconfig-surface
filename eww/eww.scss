@@ -1,54 +1,68 @@
-$is_lightmode: true;
-$main_dark_color: #2c2626;
-$main_light_color: #fbf1c6;
-$border_accent_color: #e6b77b;
-$border_accent_golder_color: #fed078;
-$accent_dark_color: #3f5242;
-$accent_light_color: #33df77;
-$accent_dark_color2: #3e2861;
-$accent_dark_color3: #82313b;
-$accent_book1_alt_color: #0c4ea6;
+/* @import "gruvboxish"; */
+$color0_bg: #282828;
+$color1_red: #82313b;
+$color2_green: #3f5242;
+$color3_yellow: #e6b77b;
+$color4_blue: #458588;
+$color5_purple: #5c468c;
+$color6_aqua: #689d6a;
+$color7_gray: #a89984;
+$color8_gray_alt: #928374;
+$color9_red: #fb4934;
+$color10_green: #b8bb26;
+$color11_yellow: #fed078;
+$color12_blue: #83a598;
+$color13_purple: #d3869b;
+$color14_aqua: #8ec07c;
+$color15_fg: #ebdbb2;
+$color16_brown: #472f18;
 
-$main_background_color: $main_light_color;
-$main_text_color: $main_dark_color;
-$main_accent_color: $accent_light_color;
-$secondary_accent_color: $accent_dark_color;
+$color_bg0_hard: #1d2021;
+$color_bg0: #282828;
+$color_bg0_soft: #32302f;
+$color_bg1: #3c3836;
+$color_bg2: #504945;
+$color_bg3: #665c54;
+$color_bg4: #7c6f64;
+
+$color_fg0_hard: #f9f5d7;
+$color_fg0: #fbf1c7;
+$color_fg0_soft: #f2e5bc;
+$color_fg1: #ebdbb2;
+$color_fg2: #d5c4a1;
+$color_fg3: #bdae93;
+$color_fg4: #a89984;
+
 $text_stroke_width: 0.125rem;
-@if $is_lightmode == false {
-    $main_background_color: $main_dark_color;
-    $main_text_color: $main_light_color;
-    $main_accent_color: $accent_dark_color;
-    $secondary_accent_color: $accent_light_color;
-}
 $theme_border_radius: 0px;
 
 // @@@@@@@@@@@@@@@@@@
 // Global Styles
 // @@@@@@@@@@@@@@@@@@
 * {
-    /* all: unset;  */
+    all: unset;
     font-family: "DepartureMono Nerd Font Mono", "Ubuntu Sans Mono";
     /* opacity: 0.95; */
 }
 
 box {
-    color: $main_text_color;
-    /* background-color: $main_background_color; */
+    color: $color_fg0_soft;
+    /* background-color: $color_bg0_soft; */
     background-color: rgba(0, 0, 0, 0);
 }
 
 progressbar {
-    background-color: $border_accent_golder_color;
+    background-color: $color11_yellow;
 }
 
 progressbar > trough {
     min-width: 2.5rem;
-    background-color: $border_accent_golder_color;
+    background-color: $color11_yellow;
     border: 0;
 }
 
 progress {
-    background-color: $secondary_accent_color;
+    background-color: $color2_green;
     border: 0;
     min-width: 2.5rem;
     border-radius: $theme_border_radius;
@@ -59,13 +73,13 @@ progress {
 .workspace_header_icon {
     font-size: 24px;
     margin-top: -1.4rem;
-    color: $accent_dark_color3;
+    color: $color1_red;
 }
-$stroke_color: $border_accent_golder_color;
+$stroke_color: $color11_yellow;
 .workspaces_button_text {
     /* margin: 1rem; */
     padding: 0.3rem 0 0rem 0;
-    color: $main_text_color;
+    color: $color_fg0_soft;
     font-weight: bold;
     text-shadow:
         0.0625rem 0.0625rem 0 $stroke_color,
@@ -84,7 +98,7 @@ $stroke_color: $border_accent_golder_color;
     font-size: 20px;
     padding: 1rem 0 0.3rem 0;
     font-weight: bold;
-    color: $accent_dark_color3;
+    color: $color1_red;
     text-shadow:
         0.0625rem 0.0625rem 0 $stroke_color,
         0.0625rem -0.0625rem 0 $stroke_color,
@@ -97,25 +111,25 @@ $stroke_color: $border_accent_golder_color;
 }
 .workspaces_button_widget {
     /* border-radius: 1rem; */
-    /* border-bottom: 0.2rem solid $accent_dark_color3; */
-    /* border: 1px solid $border_accent_golder_color; */
-    /* background-color: $secondary_accent_color; */
+    /* border-bottom: 0.2rem solid $color1_red; */
+    /* border: 1px solid $color11_yellow; */
+    /* background-color: $color2_green; */
 }
 
 .workspaces_button_widget:hover {
-    /* background-color: rgba($main_background_color, 0.5); */
+    /* background-color: rgba($color_bg0_soft, 0.5); */
 
-    border-bottom: 0.2rem solid $accent_dark_color3;
+    border-bottom: 0.2rem solid $color1_red;
 }
 .active_workspace {
-    /* background-color: $accent_dark_color3; */
+    /* background-color: $color1_red; */
 
-    border-bottom: 0.2rem solid $accent_dark_color3;
+    border-bottom: 0.2rem solid $color1_red;
 }
 .active_workspace:hover {
-    /* background-color: rgba($accent_dark_color3, 0.5); */
+    /* background-color: rgba($color1_red, 0.5); */
 
-    /* background-color: rgba($main_background_color, 0.5); */
+    /* background-color: rgba($color_bg0_soft, 0.5); */
 }
 .active_workspace_text {
     /* color: $main_accent_color; */
@@ -123,16 +137,16 @@ $stroke_color: $border_accent_golder_color;
 .current_workspaces {
     margin: -0.5rem 0.3rem 0.2rem 0.3rem;
     background-color: rgba(0, 0, 0, 0);
-    /* border: 0.1rem solid $accent_dark_color3; */
+    /* border: 0.1rem solid $color1_red; */
     padding: 1rem 0 1rem 0;
 }
 // @@@@@@@@@@@@@@@@@@
 // clock
 // @@@@@@@@@@@@@@@@@@
-$clock_text_stroke_color: $border_accent_golder_color;
+$clock_text_stroke_color: $color11_yellow;
 .clock {
     background-color: rgba(0, 0, 0, 0);
-    color: $main_text_color;
+    color: $color_bg0_soft;
     border-radius: $theme_border_radius;
     padding-bottom: 0.1875rem;
     text-shadow:
@@ -169,28 +183,28 @@ $clock_text_stroke_color: $border_accent_golder_color;
 }
 
 .calendar_box {
-    background-color: $secondary_accent_color;
+    background-color: $color2_green;
     padding: 1rem 0.6rem 0 0.6rem;
     opacity: 0.9;
-    border: 0.5rem solid $border_accent_color;
+    border: 0.5rem solid $color3_yellow;
     border-radius: $theme_border_radius;
     font-weight: bold;
     font-size: 18px;
 }
 
 .calendar_inner_box {
-    background-color: $secondary_accent_color;
+    background-color: $color2_green;
     padding: 0.625rem;
 }
 
 .calendar_itself {
-    background-color: $secondary_accent_color;
-    color: $border_accent_color;
+    background-color: $color2_green;
+    color: $color3_yellow;
     padding: 0.625rem;
 }
 calendar {
     all: unset; // need this otherwise the calendar will have weird white lines
-    /* background-color: $secondary_accent_color; */
+    /* background-color: $color2_green; */
 }
 calendar:selected {
     color: mintcream;
@@ -198,83 +212,59 @@ calendar:selected {
 }
 
 calendar.header {
-    border-bottom: 0.25rem solid $border_accent_color;
+    border-bottom: 0.25rem solid $color3_yellow;
     margin: 0.3125rem 0 0 0.3125rem;
 }
 
 calendar.highlight {
-    color: $border_accent_color;
+    color: $color3_yellow;
 }
 
 calendar.button {
-    color: $border_accent_color;
+    color: $color3_yellow;
 }
 
 calendar:indeterminate {
-    color: rgba($border_accent_color, 0.5);
+    color: rgba($color3_yellow, 0.5);
 }
 
 calendar:hover {
     background-color: mintcream;
 }
 
-// @@@@@@@@@@@@@@@@@@
-// battery
-// @@@@@@@@@@@@@@@@@@
-.battery {
-    background-color: rgba(255, 255, 255, 0);
-}
-
-.battery_icon {
-    color: $border_accent_golder_color;
-    background-color: rgba(255, 255, 255, 0);
-    font-size: 24px;
-}
-
-.battery_tooltip {
-    background-color: $border_accent_golder_color;
-    color: $main_text_color;
-    border-radius: $theme_border_radius;
-    border: 0.25rem solid $secondary_accent_color;
-    padding: 0.3125rem;
-    min-width: 22rem;
-    font-weight: bold;
-    font-size: 18px;
-}
-
 // @@@@@@@@@@@@@
 // resource monitor
 // @@@@@@@@@@@@@
 .resource_widget {
-    background-color: $accent_dark_color3;
-    color: $border_accent_golder_color;
-    border-left: 0.1rem solid $border_accent_golder_color;
-    border-right: 0.1rem solid $border_accent_golder_color;
+    background-color: $color1_red;
+    color: $color11_yellow;
+    border-left: 0.1rem solid $color11_yellow;
+    border-right: 0.1rem solid $color11_yellow;
 
     margin: 0 0.3rem 0 0.3rem;
 }
 .first_resource_widget {
     padding-top: 15px;
-    border-top: 0.1rem solid $border_accent_golder_color;
+    border-top: 0.1rem solid $color11_yellow;
 }
 .last_resource_widget {
     padding-bottom: 40px;
-    border-bottom: 0.1rem solid $border_accent_golder_color;
+    border-bottom: 0.1rem solid $color11_yellow;
 }
 .cancel_background {
     background-color: rgba(255, 255, 255, 0);
-    color: $border_accent_golder_color;
+    color: $color11_yellow;
     font-size: 11px;
     font-weight: bold;
 }
 .simple_monitor_class {
-    /* background-color: $accent_dark_color3; */
+    /* background-color: $color1_red; */
     /* font-size: 12px;  */
     /* font-weight: bold; */
-    /* color: $border_accent_golder_color; */
+    /* color: $color11_yellow; */
     /* box-shadow:
-        inset 0.7rem 0rem 0.3rem -0.3rem rgba($main_text_color, 0.7),
-        inset -0.7rem 0rem 0.3rem -0.3rem rgba($main_text_color, 0.7); */
+        inset 0.7rem 0rem 0.3rem -0.3rem rgba($color_fg0_soft, 0.7),
+        inset -0.7rem 0rem 0.3rem -0.3rem rgba($color_fg0_soft, 0.7); */
 }
 
 .cpu_icon {
@@ -326,8 +316,8 @@ calendar:hover {
 .volume_widget {
 }
 .volume_outer {
-    background-color: $secondary_accent_color;
-    border: 0.5rem solid $border_accent_golder_color;
+    background-color: $color2_green;
+    border: 0.5rem solid $color11_yellow;
 }
 
 .volume_outer slider {
@@ -335,16 +325,51 @@ calendar:hover {
 }
 .volume_popup scale trough highlight {
     all: unset;
-    background-color: $border_accent_golder_color;
+    background-color: $color11_yellow;
 }
 
 .volume_popup scale trough {
     all: unset;
-    background-color: rgba($border_accent_golder_color, 0.4);
+    background-color: rgba($color11_yellow, 0.4);
     border-radius: 0px;
     min-height: 10px;
     min-width: 100px;
     margin: 0 10px 0 20px;
+}
+
+// @@@@@@@@@@@@@@@@@@
+// battery
+// @@@@@@@@@@@@@@@@@@
+.battery {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.battery_icon {
+    color: $color11_yellow;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 24px;
+}
+
+.battery_tooltip {
+    background-color: $color11_yellow;
+    color: $color_fg0_soft;
+    border-radius: $theme_border_radius;
+    border: 0.25rem solid $color2_green;
+    padding: 0.3125rem;
+    min-width: 22rem;
+    font-weight: bold;
+    font-size: 18px;
+}
+// @@@@@@@@@@@@@@@@@@
+// tray
+// @@@@@@@@@@@@@@@@@@
+.tray {
+    min-height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.tray menu {
+    background-color: lightblue;
 }
 // @@@@@@@@@@@@@@@@@@
 // vertical bar
@@ -352,7 +377,7 @@ calendar:hover {
 .bar_itself {
 }
 .bar_contents_top {
-    border: 0.1rem solid $accent_dark_color3;
+    border: 0.1rem solid $color1_red;
     margin: 1rem 0.3rem 0 0.3rem;
 }
 .bar_contents_bottom {
@@ -365,36 +390,20 @@ calendar:hover {
 }
 
 // @@@@@@@@@@@@@@@@@@
-// tray
-// @@@@@@@@@@@@@@@@@@
-.tray {
-    min-height: 100px;
-    background-color: rgba(255, 255, 255, 0);
-}
-
-.tray menu {
-    background-color: lightblue;
-}
-
-// @@@@@@@@@@@@@@@@@@
 // currently reading
 // @@@@@@@@@@@@@@@@@@
 .bookshelf {
-    background: linear-gradient(
-        to bottom,
-        rgba($main_background_color, 0.9),
-        rgba($main_background_color, 0.9)
-    );
-    border: 0.5rem solid $border_accent_golder_color;
-    box-shadow: inset 0 0 0 0.5rem $accent_dark_color2;
+    background: linear-gradient(to bottom, rgba($color_fg0_soft, 0.9), rgba($color_fg0_soft, 0.9));
+    border: 0.5rem solid $color11_yellow;
+    box-shadow: inset 0 0 0 0.5rem $color16_brown;
     padding: 0.5rem 0.5rem 0 0.5rem;
     border-radius: $theme_border_radius;
     min-width: 6.25rem;
     font-size: 24px;
 }
 
-$title_text_color: $main_background_color;
-$title_stroke_color: $main_text_color;
+$title_text_color: $color_fg0_soft;
+$title_stroke_color: $color_bg0_soft;
 
 .book_title {
     color: $title_text_color;
@@ -414,8 +423,8 @@ $title_stroke_color: $main_text_color;
 .shelf {
     background-color: rgba(255, 255, 255, 0);
     padding: 0 0.3125rem 0 0.3125rem;
-    border-bottom: 0.75rem solid $accent_dark_color2;
-    box-shadow: inset 0 0.375rem 0.75rem rgba(#5c4033, 0.8);
+    border-bottom: 0.75rem solid $color16_brown;
+    box-shadow: inset 0 0.375rem 0.75rem rgba($color16_brown, 0.8);
 }
 
 .book_progress_icons {
@@ -425,7 +434,7 @@ $title_stroke_color: $main_text_color;
 .book_progress_icon {
     opacity: 1;
     margin: -0.125rem 0 -0.5625rem 0;
-    color: $secondary_accent_color;
+    color: $color2_green;
     text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.5);
     font-size: 48px;
 }
@@ -437,7 +446,29 @@ $title_stroke_color: $main_text_color;
 
 .title_length_adjuster {
 }
+// @@@@@@@@@@@@@@
+// disk usage
+// @@@@@@@@@
+.circle_outer {
+    background-color: purple;
+    padding: 5rem;
+}
+.circle_itself {
+    color: lightblue;
+    /* padding: 10rem; */
+    /* margin: 10rem; */
+}
+.circle_info {
+    color: lightblue;
+    padding: 3rem;
+}
 
+// @@@@@@
+// desktop window
+// @@@@@@@
+.desktop_window {
+    background-color: rgba(red, 0.1);
+}
 // @@@@@@@@@@@@@@@@@@
 // debug
 // @@@@@@@@@@@@@@@@@@
