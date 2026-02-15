@@ -1,24 +1,17 @@
 {
   "books": [
     {
-      "title": "A fire upon the deep",
-      "progress": 83
-    },
-    {
       "title": "Northanger abbey",
       "progress": 17
     },
-    {
-      "title": "A hitchhiker's guide to the galaxy",
-      "progress": 80
-    },
-    {
-      "title": "The once and future queen",
-      "progress": 56
-    },
+
     {
       "title": "The divine comedy: volume 1: hell",
       "progress": 49
+    },
+    {
+      "title": "test",
+      "progress": 62
     }
   ]
 }

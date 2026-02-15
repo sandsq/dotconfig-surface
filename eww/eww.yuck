@@ -372,25 +372,71 @@
 ; disk usage
 ; @@@@@@@@@
 (defpoll disk_info :interval "1m" "eww get EWW_DISK")
-(defwidget disk_usage_widget [drive]
-    (box :class "circle_outer"
-    (circular-progress
-        :class "circle_itself"
-        :value "${round(disk_info[drive].used_perc, 0)}"
-        :thickness 10
-        (box
-            :halign "center"
-            :valign "center"
-            :orientation "v"
-            :class "circle_info"
-            (label
-                :text "${formatbytes(disk_info[drive].free, true, 'si')}"
+(defwidget disk_usage_widget [drive icon ?text_class ?icon_class ?outer_class ?circle_class ?info_class]
+    (box
+        :class "circle_outer ${outer_class}"
+        :orientation "v"
+        :space-evenly false
+        (circular-progress
+            :class "circle_itself ${circle_class}"
+            :value "${round(disk_info[drive].used_perc, 0)}"
+            :thickness 10
+            :start-at 75
+            (box
+                :halign "center"
+                :valign "center"
+                :orientation "v"
+                :class "circle_info ${info_class}"
+                (label
+                    :text "${formatbytes(disk_info[drive].free, true, 'si')}"
+                )
+                (label
+                    :text "free"
+                )
             )
+        )
+        (box
+            :orientation "h"
+            :space-evenly false
+            :halign "center"
+            :class "disk_info"
+            ; (label
+            ;     :class icon_class
+            ;     :text icon
+            ; )
             (label
-                :text "free"
+                :class text_class
+                :text drive
             )
         )
     )
+)
+; °C
+; @@@@@@@
+; weather
+; @@@@@@
+(defpoll weather_data :interval "1m" "scripts/get_weather_info.sh --getdata")
+(defpoll current_degrees :interval "1m" "scripts/get_weather_info.sh --temp")
+(defpoll current_weather_icon :interval "1m" "scripts/get_weather_info.sh --icon")
+(defpoll sunrise_time_epoch :interval "10m" "scripts/get_weather_info.sh --sunrise_epoch")
+(defpoll sunset_time_epoch :interval "10m" "scripts/get_weather_info.sh --sunset_epoch")
+(defwidget weather_widget []
+    (box
+        :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_outer_day' : 'weather_outer_night')}"
+        (label :text weather_data :visible false)
+        (box
+            :orientation "v"
+            :space-evenly false
+            :valign "center"
+            :halign "center"
+            (label
+                :class "weather_icon"
+                :text current_weather_icon)
+            (label
+                :class "degrees_text"
+                :text "${round(current_degrees, 0)}°C"
+            )
+        )
     )
 )
 ; @@@@@@@@@@@@@@@@@
@@ -479,20 +525,25 @@
         :exclusive false
     (box
         :class "desktop_window"
-        :spacing 20
+        :spacing 10
         :space-evenly false
+        :orientation "v"
         (box
+            :spacing 10
             :orientation "v"
-
-        (box
-        (disk_usage_widget :drive "/")
-        (disk_usage_widget :drive "/mnt/sd256")
+            :space-evenly false
+            (box
+                (disk_usage_widget :drive "/" :icon "╏" :text_class "root_text" :icon_class "root_icon")
+                (disk_usage_widget :drive "/mnt/sd256" :icon "┸" :text_class "sd_text" :icon_class "sd_icon"
+                    :outer_class "sd_outer" :circle_class "sd_itself" :info_class "sd_info")
+            )
         )
         (box
-        (disk_usage_widget :drive "/")
-        (disk_usage_widget :drive "/mnt/sd256")
+            :space-evenly false
+            :halign "center"
+            (weather_widget)
+            (currently_reading :reading_data currently_reading_data)
+        ; (label :text "hi")
         )
-        )
-        (currently_reading :reading_data currently_reading_data)
     )
     )
