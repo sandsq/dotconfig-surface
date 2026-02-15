@@ -236,21 +236,24 @@ calendar:hover {
 // @@@@@@@@@@@@@
 // resource monitor
 // @@@@@@@@@@@@@
-.resource_widget {
+.bottom_info_widgets {
     background-color: $color1_red;
-    color: $color11_yellow;
-    border-left: 0.1rem solid $color11_yellow;
-    border-right: 0.1rem solid $color11_yellow;
-
+    border: 0.1rem solid $color11_yellow;
     margin: 0 0.3rem 0 0.3rem;
+    padding: 1rem 0 1.75rem 0;
+}
+.resource_widget {
+    color: $color11_yellow;
+    /* border-right: 0.1rem solid $color11_yellow; */
+    margin: 1rem 0 0 0;
 }
 .first_resource_widget {
-    padding-top: 15px;
-    border-top: 0.1rem solid $color11_yellow;
+    /* padding-top: 2rem; */
+    /* border-top: 0.1rem solid $color11_yellow; */
 }
 .last_resource_widget {
-    padding-bottom: 40px;
-    border-bottom: 0.1rem solid $color11_yellow;
+    /* padding-bottom: 2.25rem; */
+    /* border-bottom: 0.1rem solid $color11_yellow; */
 }
 .cancel_background {
     background-color: rgba(255, 255, 255, 0);
@@ -267,25 +270,32 @@ calendar:hover {
         inset 0.7rem 0rem 0.3rem -0.3rem rgba($color_fg0_soft, 0.7),
         inset -0.7rem 0rem 0.3rem -0.3rem rgba($color_fg0_soft, 0.7); */
 }
-
+.small_temp_icon {
+    font-size: 16px;
+    margin: 0rem 0.2rem 0rem 0.2rem;
+}
+.small_temp_text {
+    font-size: 16px;
+}
 .cpu_icon {
     font-size: 24px;
-    margin: 1rem 0.2rem -2rem 0.2rem;
+    /* margin: 0rem 0.2rem -2rem 0.2rem; */
+    /* margin: 0.5rem 0 -0.3rem 0; */
     /* margin-top: 0.5rem; */
 }
 .cpu_text {
     /* padding: 0px 0 0px 0; */
     font-size: 12px;
-    margin-top: 1.2rem;
+    /* margin-top: 1.2rem; */
 }
 .temp_icon {
     font-size: 20px;
-    margin: 1rem 0 -0.5rem 0;
+    /* margin: 1rem 0 -0.5rem 0; */
 }
 
 .temp_text {
     font-size: 12px;
-    margin: -0.7rem 0 -1rem 0;
+    /* margin: -0.7rem 0 -1rem 0; */
 }
 
 .ram_icon {

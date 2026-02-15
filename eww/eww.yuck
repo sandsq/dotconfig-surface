@@ -139,12 +139,21 @@
     )
 )
 
-
+(defwidget small_temp_widget [?widget_classes]
+    (box
+        :orientation "v"
+        :class widget_classes
+        :space-evenly false
+    (icon_widget :icon "°C" :icon_class "small_temp_icon" )
+    (text_widget :text current_degrees :text_class "small_temp_text")
+    )
+)
 ; ╬
 (defwidget cpu_widget [?widget_classes]
     (box
         :orientation "v"
         :class widget_classes
+        :space-evenly false
     (icon_widget :icon "✧" :icon_class "cpu_icon" )
     (text_widget :text "${round(EWW_CPU.avg, 0)}%" :text_class "cpu_text")
     )
@@ -154,6 +163,7 @@
     (box
         :class widget_classes
         :orientation "v"
+        :space-evenly false
         (icon_widget :icon "╽" :icon_class "temp_icon")
         (text_widget :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°" :text_class "temp_text")
     )
@@ -163,6 +173,7 @@
     (box
         :class widget_classes
         :orientation "v"
+        :space-evenly false
         (icon_widget :icon "╥" :icon_class "ram_icon debug_border")
         (text_widget :text "${round(EWW_RAM.used_mem_perc, 0)}%" :text_class "ram_text debug_border")
     )
@@ -175,7 +186,7 @@
 
 (defwidget volume_widget [?widget_classes]
     (box :class widget_classes
-    (eventbox
+        (eventbox
         :onclick `
           if eww active-windows | grep -q volume_window; then
             eww close volume_window;
@@ -477,10 +488,16 @@
             :space-evenly false
             :valign "end"
             ; :spacing 5
-            (cpu_widget :widget_classes "resource_widget first_resource_widget")
-            (cpu_temp_widget :widget_classes "resource_widget")
-            (ram_widget :widget_classes "resource_widget")
-            (volume_widget :widget_classes "volume_widget resource_widget last_resource_widget")
+            (box
+                :class "bottom_info_widgets"
+                :orientation "v"
+                :space-evenly false
+                (small_temp_widget :widget_classes "resource_widget first_resource_widget")
+                (cpu_widget :widget_classes "resource_widget")
+                (cpu_temp_widget :widget_classes "resource_widget")
+                (ram_widget :widget_classes "resource_widget")
+                (volume_widget :widget_classes "volume_widget resource_widget last_resource_widget")
+            )
             ; (box :orientation "v"
             ;     :class "resource_widget first_resource_widget"
             ; (icon_widget :icon "✧" :icon_class "cpu_icon cancel_background debug_border")
