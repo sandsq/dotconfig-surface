@@ -3,7 +3,7 @@
 ;; @@@@@@@@@@
 ; place elements at milestone heights so battery % can be checked with bar
 ; color change when battery under a certain amount
-;
+; flash a workspace when a window opens there
 ; @@@@@@
 ; notes
 ; @@@@@
@@ -464,7 +464,7 @@
                 :space-evenly false
                 :class "debug_border"
                 (label
-                    :class "weather_icon"
+                    :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_icon_day' : 'weather_icon_night')}"
                     :text current_weather_icon)
             )
             (box
@@ -481,6 +481,31 @@
                     :class "stat_text"
                 )
             )
+        )
+    )
+)
+; @@@@@@
+; timequote widget
+; I got the quotes from literaryclock.com
+; @@@@@@@@
+(deflisten current_minute_quote :initial "-" `scripts/get_quote_for_minute.sh`)
+(defwidget current_minute_quote_widget []
+    (box :width 200
+        :class "time_of_day_quote_outer_common ${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'time_of_day_quote_outer_day' : 'time_of_day_quote_outer_night')}"
+        :orientation "v"
+        :space-evenly false
+        (label
+            :class "quote debug_border"
+            :wrap true
+            :wrap-mode "word"
+            :text "${replace(jq(current_minute_quote, '.quote', 'r'), '<br>', '\\n')}"
+        )
+        (label
+            :halign "end"
+            :wrap true
+            :wrap-mode "word"
+            :class "quote_info debug_border"
+            :text "${jq(current_minute_quote, '.title', 'r')} by ${jq(current_minute_quote, '.author', 'r')}"
         )
     )
 )
@@ -580,6 +605,10 @@
         :space-evenly false
         :orientation "v"
         (box
+            :space-evenly false
+            (current_minute_quote_widget)
+        )
+        (box
             :class "row1"
             :orientation "h"
             :spacing 10
@@ -591,22 +620,19 @@
                 :outer_class "sd_outer" :circle_class "sd_itself" :info_class "sd_info")
             ;
         )
-
-
-            (box
-                :class "row2"
-                :orientation "h"
-                :spacing 10
-                :space-evenly false
-                :halign "end"
-                (box :orientation "v"
-                    (weather_widget)
-                    (label :text "")
-                )
-                (currently_reading
-                    :reading_data currently_reading_data)
-
+        (box
+            :class "row2"
+            :orientation "h"
+            :spacing 10
+            :space-evenly false
+            :halign "end"
+            (box :orientation "v"
+                (weather_widget)
+                (label :text "")
             )
+            (currently_reading
+                :reading_data currently_reading_data)
+        )
 
 
 

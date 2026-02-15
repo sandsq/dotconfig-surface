@@ -380,7 +380,8 @@ calendar:hover {
 }
 
 .tray menu {
-    background-color: lightblue;
+    /* background-color: lightblue; */
+    background-color: $color_bg0_soft;
 }
 // @@@@@@@@@@@@@@@@@@
 // vertical bar
@@ -419,13 +420,14 @@ calendar:hover {
 // currently reading
 // @@@@@@@@@@@@@@@@@@
 .bookshelf {
-    background: linear-gradient(to bottom, rgba($color_fg0_soft, 0.9), rgba($color_fg0_soft, 0.9));
+    background: linear-gradient(to bottom, rgba($color_fg0_soft, 1), rgba($color_fg0_soft, 1));
     border: 0.5rem solid $color11_yellow;
     box-shadow: inset 0 0 0 0.75rem $color16_brown;
     padding: 0.5rem 0.65rem 0 0.65rem;
     border-radius: $theme_border_radius;
     min-width: 6.25rem;
     font-size: 24px;
+    opacity: 0.9;
 }
 
 $title_text_color: $color_fg0_soft;
@@ -539,9 +541,12 @@ $title_stroke_color: $color_bg0_soft;
 }
 .weather_outer_night {
     background-color: $color_bg0_soft;
+    color: $color_fg0_soft;
+    /* background-color: $color4_blue; */
     border: 0.5rem solid $color11_yellow;
 }
 .weather_outer_day {
+    color: $color_bg0_soft;
     background-color: $color11_yellow;
     border: 0.5rem solid $color_bg0_soft;
 }
@@ -551,7 +556,12 @@ $title_stroke_color: $color_bg0_soft;
 .weather_inner_day {
     color: $color_bg0_soft;
 }
-.weather_icon {
+.weather_icon_day {
+    font-size: 48px;
+    margin: -1.25rem 0 -0.5rem -0.5rem;
+    color: $color_bg0_soft;
+}
+.weather_icon_night {
     font-size: 48px;
     margin: -1.25rem 0 -0.5rem -0.5rem;
 }
@@ -561,6 +571,31 @@ $title_stroke_color: $color_bg0_soft;
 }
 .stat_text {
     font-size: 16px;
+}
+// @@@@@@@
+// time of day quote
+// @@@@@@@@@
+.time_of_day_quote_outer_common {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 1rem;
+    opacity: 0.9;
+}
+.time_of_day_quote_outer_day {
+    background-color: $color11_yellow;
+    color: $color_bg0_soft;
+    border: 0.5rem solid $color_bg0_soft;
+}
+.time_of_day_quote_outer_night {
+    background-color: $color_bg0_soft;
+    color: $color11_yellow;
+    border: 0.5rem solid $color11_yellow;
+}
+
+.quote_info {
+    font-weight: normal;
+    font-size: 16px;
+    padding: 0.5rem 0 0 0;
 }
 // @@@@@@
 // desktop window
