@@ -315,6 +315,22 @@
     :exclusive false
     (battery_tooltip_widget)
 )
+; @@@@@@@@
+; avatar
+; @@@@@@
+(defwidget avatar_widget [path]
+    (box
+        :class "avatar_box"
+        :orientation "v"
+        :space-evenly false
+        (image
+            :image-width 124
+            :image-height 124
+            :path path
+        )
+        (label :text "sand" :class "avatar_text")
+    )
+    )
 ;; @@@@@@@@@@@
 ;; Currently Reading
 ;; @@@@@@@@@@@
@@ -435,7 +451,9 @@
 (defwidget weather_widget []
     (box
         :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_outer_day' : 'weather_outer_night')} weather_outer_common"
-        :space-evenly false
+        ; :space-evenly false
+        ; :halign "center"
+        ; :valign "center"
         (label :text weather_data :visible false)
         (box
             :orientation "v"
@@ -452,8 +470,6 @@
             (box
                 :orientation "v"
                 :space-evenly false
-                ; :valign "center"
-                ; :halign "center"
                 :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_inner_day' : 'weather_inner_night')}"
 
                 (label
@@ -563,22 +579,36 @@
         :spacing 10
         :space-evenly false
         :orientation "v"
-        ; (box
-        ;     :spacing 10
-        ;     :orientation "h"
-        ;     :space-evenly false
-        ;     (box
-        ;         :spacing 10
-        ;         (disk_usage_widget :drive "/" :icon "╏" :text_class "root_text" :icon_class "root_icon")
-        ;         (disk_usage_widget :drive "/mnt/sd256" :icon "┸" :text_class "sd_text" :icon_class "sd_icon"
-        ;             :outer_class "sd_outer" :circle_class "sd_itself" :info_class "sd_info")
-        ;     )
-        ; )
-        ; (box
+        (box
+            :class "row1"
+            :orientation "h"
+            :spacing 10
             ; :space-evenly false
-            ; :halign "center"
-            (weather_widget)
-            ; (currently_reading :reading_data currently_reading_data)
-        ; )
+            (avatar_widget :path "/home/sand/Downloads/hourglass.png")
+            (disk_usage_widget :drive "/" :icon "╏" :text_class "root_text" :icon_class "root_icon")
+            (disk_usage_widget
+                :drive "/mnt/sd256" :icon "┸" :text_class "sd_text" :icon_class "sd_icon"
+                :outer_class "sd_outer" :circle_class "sd_itself" :info_class "sd_info")
+            ;
+        )
+
+
+            (box
+                :class "row2"
+                :orientation "h"
+                :spacing 10
+                :space-evenly false
+                :halign "end"
+                (box :orientation "v"
+                    (weather_widget)
+                    (label :text "")
+                )
+                (currently_reading
+                    :reading_data currently_reading_data)
+
+            )
+
+
+
     )
     )
