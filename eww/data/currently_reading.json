@@ -2,20 +2,12 @@
   "books": [
     {
       "title": "Northanger abbey",
-      "progress": 17
+      "progress": 40
     },
 
     {
       "title": "The divine comedy: volume 1: hell",
-      "progress": 49
-    },
-    {
-      "title": "test",
-      "progress": 62
-    },
-    {
-      "title": "test2",
-      "progress": 24
+      "progress": 51
     }
   ]
 }

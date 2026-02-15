@@ -363,7 +363,7 @@ calendar:hover {
 
 .battery_tooltip {
     background-color: $color11_yellow;
-    color: $color_fg0_soft;
+    color: $color_bg0_soft;
     border-radius: $theme_border_radius;
     border: 0.25rem solid $color2_green;
     padding: 0.3125rem;
@@ -577,7 +577,7 @@ $title_stroke_color: $color_bg0_soft;
 // @@@@@@@@@
 .time_of_day_quote_outer_common {
     font-size: 20px;
-    font-weight: bold;
+    /* font-weight: bold; */
     padding: 1rem;
     opacity: 0.9;
 }

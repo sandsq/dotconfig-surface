@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-QUOTES_JSON="${1:-/home/sand/.config/eww/data/time_of_day_quotes.json}"
+QUOTES_JSON="${1:-/home/sand/.config/eww/data/time_of_day_quotes_with_bold.json}"
 
 if ! command -v jq >/dev/null 2>&1; then
   echo "jq required" >&2

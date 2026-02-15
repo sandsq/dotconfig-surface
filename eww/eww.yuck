@@ -4,6 +4,7 @@
 ; place elements at milestone heights so battery % can be checked with bar
 ; color change when battery under a certain amount
 ; flash a workspace when a window opens there
+; dynamic quote resizing so it fits a specified size. window size change is a bit jarring every minute
 ; @@@@@@
 ; notes
 ; @@@@@
@@ -250,6 +251,7 @@
       :class "tray debug_border"
       :orientation "v"
       :halign "center"
+      :spacing -45
       :height 100
     )
 )
@@ -491,14 +493,19 @@
 (deflisten current_minute_quote :initial "-" `scripts/get_quote_for_minute.sh`)
 (defwidget current_minute_quote_widget []
     (box :width 200
+        :height 350
         :class "time_of_day_quote_outer_common ${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'time_of_day_quote_outer_day' : 'time_of_day_quote_outer_night')}"
         :orientation "v"
-        :space-evenly false
+        (box
+            :space-evenly false
+            :orientation "v"
+            :valign "center"
         (label
             :class "quote debug_border"
             :wrap true
             :wrap-mode "word"
-            :text "${replace(jq(current_minute_quote, '.quote', 'r'), '<br>', '\\n')}"
+            :justify "fill"
+            :markup "${replace(replace(replace(jq(current_minute_quote, '.quote', 'r'), '<br>', ' '), '<b>', '<u>'), '</b>', '</u>')}"
         )
         (label
             :halign "end"
@@ -506,6 +513,7 @@
             :wrap-mode "word"
             :class "quote_info debug_border"
             :text "${jq(current_minute_quote, '.title', 'r')} by ${jq(current_minute_quote, '.author', 'r')}"
+        )
         )
     )
 )
@@ -627,6 +635,7 @@
             :space-evenly false
             :halign "end"
             (box :orientation "v"
+                :space-evenly false
                 (weather_widget)
                 (label :text "")
             )
