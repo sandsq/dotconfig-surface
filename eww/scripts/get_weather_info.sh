@@ -32,7 +32,9 @@ get_weather_data() {
 	if [ ! -z "$weather" ]; then
 		weather_temp=`echo "$weather" | jq ".main.temp" | cut -d "." -f 1`
 		weather_icon_code=`echo "$weather" | jq -r ".weather[].icon" | head -1`
-		weather_description=`echo "$weather" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g"`
+		# weather_description=`echo "$weather" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g"`
+		weather_description=$(echo "$weather" | jq -r '.weather[].description' | head -1)
+        weather_description="${weather_description^}"
 		weather_sunrise_epoch=`echo $weather | jq -r ".sys.sunrise"`
 		weather_sunset_epoch=`echo $weather | jq -r ".sys.sunset"`
 		weather_sunrise=`date -d @$weather_sunrise_epoch "+%I:%M %p"`

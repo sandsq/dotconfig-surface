@@ -163,6 +163,7 @@ $clock_text_stroke_color: $color11_yellow;
 .hour {
     font-size: 16px;
     font-weight: bold;
+    margin-left: -0.5rem;
 }
 
 .minute {
@@ -174,7 +175,7 @@ $clock_text_stroke_color: $color11_yellow;
 .second {
     font-size: 12px;
     font-weight: bold;
-    margin: -0.25rem 0 0 0;
+    margin: -0.25rem 0 0 0.5rem;
 }
 
 .clock_icon {
@@ -454,7 +455,7 @@ $title_stroke_color: $color_bg0_soft;
     /* background-color: $color4_blue; */
     background-color: $color16_brown;
     padding: 2rem;
-    margin: 0rem 0.5rem 0rem 0.5rem;
+    /* margin: 0rem 0.5rem 0rem 0.5rem; */
     border: 0.5rem solid $color11_yellow;
     opacity: 0.9;
 }
@@ -505,20 +506,35 @@ $title_stroke_color: $color_bg0_soft;
 // @@@@@@
 // weather
 // @@@@@@@
+.weather_outer_common {
+    /* padding: 0 4rem 0 4rem; */
+    padding: 1rem;
+    /* margin: 0 1rem 0 0; */
+}
 .weather_outer_night {
-    background-color: $color4_blue;
-    padding: 0 1rem 0 1rem;
-    margin: 0 1rem 0 0;
+    background-color: $color_bg0_soft;
+    border: 0.5rem solid $color11_yellow;
 }
 .weather_outer_day {
-    background-color: $color12_blue;
+    background-color: $color11_yellow;
+    border: 0.5rem solid $color_bg0_soft;
+}
+.weather_inner_night {
+    color: $color_fg0_soft;
+}
+.weather_inner_day {
+    color: $color_bg0_soft;
 }
 .weather_icon {
     font-size: 48px;
+    margin: -1.25rem 0 -0.5rem -0.5rem;
 }
 .degrees_text {
-    font-size: 20px;
+    font-size: 36px;
     font-weight: bold;
+}
+.stat_text {
+    font-size: 16px;
 }
 // @@@@@@
 // desktop window

@@ -415,26 +415,44 @@
 ; @@@@@@@
 ; weather
 ; @@@@@@
-(defpoll weather_data :interval "1m" "scripts/get_weather_info.sh --getdata")
-(defpoll current_degrees :interval "1m" "scripts/get_weather_info.sh --temp")
-(defpoll current_weather_icon :interval "1m" "scripts/get_weather_info.sh --icon")
+(defpoll weather_data :interval "5m" "scripts/get_weather_info.sh --getdata")
+(defpoll current_degrees :interval "5m" "scripts/get_weather_info.sh --temp")
+(defpoll current_weather_icon :interval "5m" "scripts/get_weather_info.sh --icon")
+(defpoll current_weather_stat :interval "5m" "scripts/get_weather_info.sh --stat")
 (defpoll sunrise_time_epoch :interval "10m" "scripts/get_weather_info.sh --sunrise_epoch")
 (defpoll sunset_time_epoch :interval "10m" "scripts/get_weather_info.sh --sunset_epoch")
 (defwidget weather_widget []
     (box
-        :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_outer_day' : 'weather_outer_night')}"
+        :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_outer_day' : 'weather_outer_night')} weather_outer_common"
+        :space-evenly false
         (label :text weather_data :visible false)
         (box
             :orientation "v"
             :space-evenly false
-            :valign "center"
-            :halign "center"
-            (label
-                :class "weather_icon"
-                :text current_weather_icon)
-            (label
-                :class "degrees_text"
-                :text "${round(current_degrees, 0)}°C"
+            :class "debug_border"
+            (box
+                :halign "start"
+                :space-evenly false
+                :class "debug_border"
+                (label
+                    :class "weather_icon"
+                    :text current_weather_icon)
+            )
+            (box
+                :orientation "v"
+                :space-evenly false
+                ; :valign "center"
+                ; :halign "center"
+                :class "${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'weather_inner_day' : 'weather_inner_night')}"
+
+                (label
+                    :class "degrees_text"
+                    :text "${round(current_degrees, 0)}°C"
+                )
+                (label
+                    :text current_weather_stat
+                    :class "stat_text"
+                )
             )
         )
     )
@@ -528,22 +546,22 @@
         :spacing 10
         :space-evenly false
         :orientation "v"
-        (box
-            :spacing 10
-            :orientation "v"
-            :space-evenly false
-            (box
-                (disk_usage_widget :drive "/" :icon "╏" :text_class "root_text" :icon_class "root_icon")
-                (disk_usage_widget :drive "/mnt/sd256" :icon "┸" :text_class "sd_text" :icon_class "sd_icon"
-                    :outer_class "sd_outer" :circle_class "sd_itself" :info_class "sd_info")
-            )
-        )
-        (box
-            :space-evenly false
-            :halign "center"
+        ; (box
+        ;     :spacing 10
+        ;     :orientation "h"
+        ;     :space-evenly false
+        ;     (box
+        ;         :spacing 10
+        ;         (disk_usage_widget :drive "/" :icon "╏" :text_class "root_text" :icon_class "root_icon")
+        ;         (disk_usage_widget :drive "/mnt/sd256" :icon "┸" :text_class "sd_text" :icon_class "sd_icon"
+        ;             :outer_class "sd_outer" :circle_class "sd_itself" :info_class "sd_info")
+        ;     )
+        ; )
+        ; (box
+            ; :space-evenly false
+            ; :halign "center"
             (weather_widget)
-            (currently_reading :reading_data currently_reading_data)
-        ; (label :text "hi")
-        )
+            ; (currently_reading :reading_data currently_reading_data)
+        ; )
     )
     )
