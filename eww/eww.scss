@@ -589,13 +589,25 @@ $title_stroke_color: $color_bg0_soft;
 .time_of_day_quote_outer_night {
     background-color: $color_bg0_soft;
     color: $color11_yellow;
+    /* color: black; */
     border: 0.5rem solid $color11_yellow;
 }
-
-.quote_info {
+.quote_itself_day {
+    color: $color_bg0_soft;
+}
+.quote_itself_night {
+    color: $color_fg0_soft;
+}
+.quote_info_night {
     font-weight: normal;
     font-size: 16px;
     padding: 0.5rem 0 0 0;
+}
+.quote_info_day {
+    font-weight: normal;
+    font-size: 16px;
+    padding: 0.5rem 0 0 0;
+    color: $color_bg0_soft;
 }
 // @@@@@@
 // desktop window

@@ -501,7 +501,7 @@
             :orientation "v"
             :valign "center"
         (label
-            :class "quote debug_border"
+            :class " ${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'quote_itself_day' : 'quote_itself_night')} debug_border"
             :wrap true
             :wrap-mode "word"
             :justify "fill"
@@ -511,7 +511,7 @@
             :halign "end"
             :wrap true
             :wrap-mode "word"
-            :class "quote_info debug_border"
+            :class " ${(EWW_TIME >= sunrise_time_epoch && EWW_TIME <= sunset_time_epoch ? 'quote_info_day' : 'quote_info_night')} debug_border"
             :text "${jq(current_minute_quote, '.title', 'r')} by ${jq(current_minute_quote, '.author', 'r')}"
         )
         )
