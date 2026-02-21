@@ -110,7 +110,7 @@
 )
 
 (defwindow my_calendar_window
-  :monitor 0
+    :monitor '["DP-3", 0]'
   :stacking "fg"
   :geometry (geometry
               :x "0.5%"
@@ -216,7 +216,7 @@
 )
 
 (defwindow volume_window
-  :monitor 0
+    :monitor '["DP-3", 0]'
   :geometry (geometry
               :x "0.5%"
               :y "14%"
@@ -307,7 +307,7 @@
 )
 
 (defwindow battery_tooltip_window
-    :monitor 0
+    :monitor '["DP-3", 0]'
     :geometry (geometry
                 :x "0.5%"
                 :y "1%"
@@ -570,7 +570,7 @@
 )
 
 (defwindow my_vertical_bar
-        :monitor 0
+    :monitor '["DP-3", 0]'
         :geometry (geometry
                     :x "0px"
                     :y "0px"
@@ -600,7 +600,7 @@
 ; desktop info
 ; @@@@@@
 (defwindow my_desktop_window
-        :monitor 0
+    :monitor '["DP-3", 0]'
         :geometry (geometry
                     :x "0%"
                     :y "0%"
