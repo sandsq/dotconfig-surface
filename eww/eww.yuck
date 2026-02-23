@@ -649,3 +649,29 @@
 
     )
     )
+; /mnt/sd256/SteamLibrary/steamapps/common/Aseprite/aseprite
+(defwindow aseprite_launcher
+    :monitor 0
+    :geometry (geometry
+                        :x "0%"
+                        :y "2%"
+                        ; :width "20%"
+                        ; :height "20%"
+                        :anchor "bottom center")
+    :stacking "bg"
+    (box
+        (eventbox
+
+            :class "aseprite_launcher"
+            :onclick "steam-run /mnt/sd256/SteamLibrary/steamapps/common/Aseprite/aseprite &"
+            (image :path "data/aseprite.png"
+                :image-width 32
+                :image-height 32
+            )
+            ; (label
+            ;     :text "aseprite"
+            ; )
+        )
+
+    )
+)

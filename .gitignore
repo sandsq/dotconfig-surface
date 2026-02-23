@@ -18,3 +18,8 @@ hypr/hyprland.conf # built by home manager
 !zed/*
 
 !starship.toml
+
+!aseprite
+!aseprite/*
+!aseprite/palettes/
+!aseprite/palettes/*
