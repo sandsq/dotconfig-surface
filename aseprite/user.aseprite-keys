@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard version="1">
     <commands>
-        <key command="Undo" shortcut="I"/>
+        <key command="Undo" shortcut="I" removed="true"/>
         <key command="Undo" shortcut="Ctrl+Z"/>
+        <key command="Undo" shortcut="U"/>
         <key command="Zoom" shortcut="3">
             <param name="percentage" value="300"/>
         </key>
@@ -25,6 +26,10 @@
     <tools>
         <key tool="pencil" shortcut="O"/>
         <key tool="eyedropper" shortcut="I" removed="true"/>
+        <key tool="rectangle" shortcut="U" removed="true"/>
+        <key tool="rectangle" shortcut="I"/>
+        <key tool="filled_rectangle" shortcut="U" removed="true"/>
+        <key tool="filled_rectangle" shortcut="I"/>
     </tools>
     <quicktools/>
     <actions/>

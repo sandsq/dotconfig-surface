@@ -8,7 +8,7 @@
             <toolbar side="right"/>
             <dock>
                 <workspace/>
-                <timeline side="right" width="128" height="64"/>
+                <timeline side="right" width="136" height="64"/>
             </dock>
         </dock>
     </layout>
