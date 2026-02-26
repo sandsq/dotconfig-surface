@@ -13,7 +13,7 @@
     }
   },
   "ui_font_family": "DepartureMono Nerd Font",
-  "buffer_font_family": "DepartureMono Nerd Font Mono",
+  "buffer_font_family": "Departure Mono",
   "vim": {
     "cursor_shape": {
       "normal": "block",
